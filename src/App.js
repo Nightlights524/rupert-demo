@@ -70,12 +70,12 @@ class App extends React.Component {
 
   async updateCosts() {
     try {
-      const ownedPurchasables = await dappContract.methods.ownedPurchasables(this.state.userAccount).call();
+      const ownedPurchasables = await dappContract.methods.getOwnedPurchasables(this.state.userAccount).call();
       const costs = {};
 
       for (const key in this.state.costs) {
         const isOwned = ownedPurchasables.includes(key);
-        const purchasable = await dappContract.methods.purchasables(this.state.userAccount).call();
+        const purchasable = await dappContract.methods.purchasables(key).call();
         costs[key] = isOwned ? "OWNED" : purchasable.tokenCost;
       }
 
