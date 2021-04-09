@@ -1,15 +1,16 @@
 body {
-  background:#c6faf1;
+  background-color: #c6faf1;
 }
 
 .penguin {
+  /* background-color:#c6faf1; */
   --penguin-skin: black;
   --penguin-belly: white;
   --penguin-beak: orange;
   position: relative;
   margin: auto;
   display: block;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   width: 300px;
   height: 300px;
 }
