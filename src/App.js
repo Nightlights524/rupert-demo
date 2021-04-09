@@ -12,10 +12,10 @@ import Purchasable from './Purchasable.js';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
-const dappContractAddress = "0xa10aF0Fa421A06c9F6Ae0BD3D0A709ec11b2Bf48";
+const dappContractAddress = "0x263FB9967F902e5b452429976f40e3cc9794A501";
 const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress); // CHANGE ABI NAME?
 
-const tokenAddress = "0x5503575A694bDA443DdD11C9e11eAb894568AEEf";
+const tokenAddress = "0x4ca30a05308bdF0F69684CCbeA9F949132b3C624";
 const tokenContract = new web3.eth.Contract(tokenContractABI, tokenAddress); // CHANGE ABI NAME?
 
 class App extends React.Component {
@@ -25,14 +25,14 @@ class App extends React.Component {
       userAccount: "Connecting wallet...",
       tokenBalance: 0,
       costs: {
-        // walk: 1000,
-        // jump: 1000,
-        // spin: 1000,
-        // wave: 1000,
-        // speak: 1000,
-        // topHat: 1000,
-        // monacle: 1000,
-        // lollipop: 1000
+        walk: null,
+        jump: null,
+        spin: null,
+        wave: null,
+        speak: null,
+        topHat: null,
+        monacle: null,
+        lollipop: null
       }
     };
     this.updateTokenBalance = this.updateTokenBalance.bind(this);
@@ -96,14 +96,14 @@ class App extends React.Component {
         </header>
         <main>
           <Sidebar>
-            <Purchasable label="Walk" purchasableName="walk" cost={this.state.costs.walk}/>
-            <Purchasable label="Jump" purchasableName="jump" cost={this.state.costs.jump}/>
-            <Purchasable label="Spin" purchasableName="spin" cost={this.state.costs.spin}/>
-            <Purchasable label="Wave" purchasableName="wave" cost={this.state.costs.wave}/>
-            <Purchasable label="Speak" purchasableName="speak" cost={this.state.costs.speak}/>
-            <Purchasable label="Top Hat" purchasableName="topHat" cost={this.state.costs.topHat}/>
-            <Purchasable label="Monacle" purchasableName="monacle" cost={this.state.costs.monacle}/>
-            <Purchasable label="Lollipop" purchasableName="lollipop" cost={this.state.costs.lollipop}/>
+            <Purchasable label="Walk" id="walk" cost={this.state.costs.walk}/>
+            <Purchasable label="Jump" id="jump" cost={this.state.costs.jump}/>
+            <Purchasable label="Spin" id="spin" cost={this.state.costs.spin}/>
+            <Purchasable label="Wave" id="wave" cost={this.state.costs.wave}/>
+            <Purchasable label="Speak" id="speak" cost={this.state.costs.speak}/>
+            <Purchasable label="Top Hat" id="topHat" cost={this.state.costs.topHat}/>
+            <Purchasable label="Monacle" id="monacle" cost={this.state.costs.monacle}/>
+            <Purchasable label="Lollipop" id="lollipop" cost={this.state.costs.lollipop}/>
           </Sidebar>
           <div className="App-playArea">
             <h1>Hi, I'm Steve!</h1>
