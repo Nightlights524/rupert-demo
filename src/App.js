@@ -36,7 +36,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p>PenguinCoin Balance:</p>
+          <p>PenguinCoin Balance: 0</p>
           {/* <p>Ethereum ERC-20 Token & Dapp Demo</p> */}
           <p>{this.state.userAccount}</p>
         </header>

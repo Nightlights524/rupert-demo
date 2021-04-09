@@ -4,7 +4,7 @@ import Purchasable from './Purchasable.js';
 function Sidebar() {
   return (
     <div className="Sidebar">
-      <Purchasable label="Run" purchasableName="run"/>
+      <Purchasable label="Walk" purchasableName="walk"/>
       <Purchasable label="Jump" purchasableName="jump"/>
       <Purchasable label="Spin" purchasableName="spin"/>
       <Purchasable label="Wave" purchasableName="wave"/>
