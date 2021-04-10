@@ -12,10 +12,10 @@ import Purchasable from './Purchasable.js';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
-const dappContractAddress = "0x263FB9967F902e5b452429976f40e3cc9794A501";
+const dappContractAddress = "0x23B33F04C16807dE8F01C1F11284035DB819490f";
 const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress); // CHANGE ABI NAME?
 
-const tokenAddress = "0x4ca30a05308bdF0F69684CCbeA9F949132b3C624";
+const tokenAddress = "0x67cB97D83f8b1B6fEFc3181E9Ff9f03Dd5461589";
 const tokenContract = new web3.eth.Contract(tokenContractABI, tokenAddress); // CHANGE ABI NAME?
 
 class App extends React.Component {
