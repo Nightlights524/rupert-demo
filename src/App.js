@@ -12,17 +12,17 @@ import Purchasable from './Purchasable.js';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
-const dappContractAddress = "0x23B33F04C16807dE8F01C1F11284035DB819490f";
+const dappContractAddress = "0x4F115fd4C6FD963CB250Fac162e5852e5530FD13";
 const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress); // CHANGE ABI NAME?
 
-const tokenAddress = "0x67cB97D83f8b1B6fEFc3181E9Ff9f03Dd5461589";
-const tokenContract = new web3.eth.Contract(tokenContractABI, tokenAddress); // CHANGE ABI NAME?
+const tokenContractAddress = "0x4BB3F47D96a4B7bcF5056cb16104005A481C0446";
+const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress); // CHANGE ABI NAME?
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userAccount: "Connecting wallet...",
+      userAccount: "(connecting wallet...)",
       tokenBalance: 0,
       costs: {
         walk: null,
@@ -37,6 +37,8 @@ class App extends React.Component {
     };
     this.updateTokenBalance = this.updateTokenBalance.bind(this);
     this.updateCosts = this.updateCosts.bind(this);
+    this.approveToken = this.approveToken.bind(this);
+    this.purchase = this.purchase.bind(this);
   }
 
   componentDidMount() {
@@ -72,17 +74,37 @@ class App extends React.Component {
     try {
       const ownedPurchasables = await dappContract.methods.getOwnedPurchasables(this.state.userAccount).call();
       const costs = {};
-
+      
       for (const key in this.state.costs) {
         const isOwned = ownedPurchasables.includes(key);
         const purchasable = await dappContract.methods.purchasables(key).call();
         costs[key] = isOwned ? "OWNED" : purchasable.tokenCost;
       }
-
+      
       this.setState({costs});
-
+      
     } catch (error) {
       alert(error);
+    }
+  }
+  
+  async approveToken() {
+    try {
+      await tokenContract.methods.approve(dappContractAddress, 24000000).send({from: this.state.userAccount});
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  async purchase(itemName) {
+    try {
+      // const balanceOf = await tokenContract.methods.balanceOf(tokenContractAddress).call();
+      // alert(balanceOf);
+      const transaction = await dappContract.methods.purchase(itemName).send({from: this.state.userAccount});
+      console.log(transaction);
+      // alert(purchased ? `Successfully purchased ${itemName}!` : "Uh-oh! Purchase unsuccessful.");
+    } catch (error) {
+      console.error(error);
     }
   }
   
@@ -92,24 +114,25 @@ class App extends React.Component {
         <header className="App-header">
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
           {/* <p>ERC20/BEP20 Token & Dapp Demo</p> */}
-          <p>{this.state.userAccount}</p>
+          <p>{`Account: ${this.state.userAccount}`}</p>
         </header>
         <main>
           <Sidebar>
-            <Purchasable label="Walk" id="walk" cost={this.state.costs.walk}/>
-            <Purchasable label="Jump" id="jump" cost={this.state.costs.jump}/>
-            <Purchasable label="Spin" id="spin" cost={this.state.costs.spin}/>
-            <Purchasable label="Wave" id="wave" cost={this.state.costs.wave}/>
-            <Purchasable label="Speak" id="speak" cost={this.state.costs.speak}/>
-            <Purchasable label="Top Hat" id="topHat" cost={this.state.costs.topHat}/>
-            <Purchasable label="Monacle" id="monacle" cost={this.state.costs.monacle}/>
-            <Purchasable label="Lollipop" id="lollipop" cost={this.state.costs.lollipop}/>
+            <Purchasable label="Walk" id="walk" cost={this.state.costs.walk} onClick={() => this.purchase("walk")}/>
+            <Purchasable label="Jump" id="jump" cost={this.state.costs.jump} onClick={() => this.purchase("jump")}/>
+            <Purchasable label="Spin" id="spin" cost={this.state.costs.spin} onClick={() => this.purchase("spin")}/>
+            <Purchasable label="Wave" id="wave" cost={this.state.costs.wave} onClick={() => this.purchase("wave")}/>
+            <Purchasable label="Speak" id="speak" cost={this.state.costs.speak} onClick={() => this.purchase("speak")}/>
+            <Purchasable label="Top Hat" id="topHat" cost={this.state.costs.topHat} onClick={() => this.purchase("topHat")}/>
+            <Purchasable label="Monacle" id="monacle" cost={this.state.costs.monacle} onClick={() => this.purchase("monacle")}/>
+            <Purchasable label="Lollipop" id="lollipop" cost={this.state.costs.lollipop} onClick={() => this.purchase("lollipop")}/>
           </Sidebar>
           <div className="App-playArea">
             <h1>Hi, I'm Steve!</h1>
             <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>
             <Penguin />
             <p>CSS penguin by FreeCodeCamp.com</p>
+            <button onClick={this.approveToken}>Approve PenguinCoin</button>
           </div>
         </main>
       </div>
