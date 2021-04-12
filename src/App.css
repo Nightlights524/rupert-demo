@@ -12,6 +12,11 @@ h2 {
   margin: 0;
 }
 
+.hidden,
+[hidden] {
+  display: none !important;
+}
+
 .App {
   text-align: center;
   /* background-color: #c6faf1; */
@@ -40,6 +45,7 @@ h2 {
   /* font-size: calc(10px + 2vmin); */
   font-size: 1.2rem;
   color: white;
+  padding: 0px 10px;
 }
 
 .App-link {
@@ -62,4 +68,13 @@ h2 {
   to {
     transform: rotate(360deg);
   }
+}
+
+.contractInteraction {
+  /* width: 90vw; */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
 }

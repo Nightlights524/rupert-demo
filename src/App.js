@@ -12,11 +12,14 @@ import Purchasable from './Purchasable.js';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
-const dappContractAddress = "0x4F115fd4C6FD963CB250Fac162e5852e5530FD13";
+const dappContractAddress = "0x651a65e854A83A41Cd6252e2d52FEf402149b01c";
 const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress); // CHANGE ABI NAME?
 
-const tokenContractAddress = "0x4BB3F47D96a4B7bcF5056cb16104005A481C0446";
+const tokenContractAddress = "0x73F194a197727f9607c88Bd3fFFe42a4b740d176";
 const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress); // CHANGE ABI NAME?
+
+const tokenApprovalAmount = 24000000;
+const tokenApprovalThreshold = 1000;
 
 class App extends React.Component {
   constructor(props) {
@@ -24,6 +27,7 @@ class App extends React.Component {
     this.state = {
       userAccount: "(connecting wallet...)",
       tokenBalance: 0,
+      approved: false,
       costs: {
         walk: null,
         jump: null,
@@ -37,7 +41,10 @@ class App extends React.Component {
     };
     this.updateTokenBalance = this.updateTokenBalance.bind(this);
     this.updateCosts = this.updateCosts.bind(this);
+    this.updateApproval = this.updateApproval.bind(this);
+    // this.isApproved = this.isApproved.bind(this);
     this.approveToken = this.approveToken.bind(this);
+    this.buyTokens = this.buyTokens.bind(this);
     this.purchase = this.purchase.bind(this);
   }
 
@@ -51,6 +58,7 @@ class App extends React.Component {
         }
         this.updateTokenBalance();
         this.updateCosts();
+        this.updateApproval();
       } catch (error) {
         alert(error);
       }
@@ -88,9 +96,38 @@ class App extends React.Component {
     }
   }
   
+  async updateApproval() {
+    try {
+      const allowance = await tokenContract.methods.allowance(this.state.userAccount, dappContractAddress).call();
+      const approved = parseInt(allowance) >= tokenApprovalThreshold;
+      if (approved !== this.state.approved) {
+        this.setState({approved});
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  // async isApproved() {
+  //   try {
+  //     const allowance = await tokenContract.methods.allowance(this.state.userAccount, dappContractAddress).call();
+  //     return parseInt(allowance) >= tokenApprovalThreshold;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+  
   async approveToken() {
     try {
-      await tokenContract.methods.approve(dappContractAddress, 24000000).send({from: this.state.userAccount});
+      await tokenContract.methods.approve(dappContractAddress, tokenApprovalAmount).send({from: this.state.userAccount});
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  async buyTokens() {
+    try {
+      await tokenContract.methods.buyTokens(10000).send({from: this.state.userAccount});
     } catch (error) {
       console.error(error);
     }
@@ -98,8 +135,12 @@ class App extends React.Component {
   
   async purchase(itemName) {
     try {
-      // const balanceOf = await tokenContract.methods.balanceOf(tokenContractAddress).call();
-      // alert(balanceOf);
+      // const approved = await this.isApproved();
+      // if (!approved) {
+      if (!this.state.approved) {
+        alert("Please click the \"APPROVE\" button before purchasing!");
+        return;
+      }
       const transaction = await dappContract.methods.purchase(itemName).send({from: this.state.userAccount});
       console.log(transaction);
       // alert(purchased ? `Successfully purchased ${itemName}!` : "Uh-oh! Purchase unsuccessful.");
@@ -114,6 +155,11 @@ class App extends React.Component {
         <header className="App-header">
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
           {/* <p>ERC20/BEP20 Token & Dapp Demo</p> */}
+          <div id="buy" className="contractInteraction">
+              <p>"Buy" 10,000 PenguinCoins</p>
+              {/* <span class="fas fa-arrow-right"></span> */}
+              <button onClick={this.buyTokens}>BUY</button>
+          </div>
           <p>{`Account: ${this.state.userAccount}`}</p>
         </header>
         <main>
@@ -129,10 +175,18 @@ class App extends React.Component {
           </Sidebar>
           <div className="App-playArea">
             <h1>Hi, I'm Steve!</h1>
-            <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>
+            <div id="approval" className={this.state.approved ? "hidden contractInteraction" : "contractInteraction"}>
+              <h2>Approve PenguinCoin to get started</h2>
+              {/* <span class="fas fa-arrow-right"></span> */}
+              <button onClick={this.approveToken}>APPROVE</button>
+            </div>
+            <h2 id="spend" className={this.state.approved ? "" : "hidden"}>Spend your PenguinCoins to buy accessories and skills for me.</h2>
             <Penguin />
+            {/* <div id="buy" className="contractInteraction"> */}
+              {/* <h2>"Buy" 10,000 PenguinCoins!</h2> */}
+              {/* <button onClick={this.buyTokens}>BUY</button> */}
+            {/* </div> */}
             <p>CSS penguin by FreeCodeCamp.com</p>
-            <button onClick={this.approveToken}>Approve PenguinCoin</button>
           </div>
         </main>
       </div>
