@@ -21,6 +21,17 @@ const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddre
 const tokenApprovalAmount = 24000000;
 const tokenApprovalThreshold = 1000;
 
+// const keyBindings = {
+//   walk: "Left-Right",
+//   jump: "Up",
+//   spin: "S",
+//   wave: "W",
+//   speak: "",
+//   topHat: "T",
+//   monocle: "M",
+//   lollipop: "L"
+// }
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +46,7 @@ class App extends React.Component {
         wave: null,
         speak: null,
         topHat: null,
-        monacle: null,
+        monocle: null,
         lollipop: null
       }
     };
@@ -133,7 +144,7 @@ class App extends React.Component {
     }
   }
   
-  async purchase(itemName) {
+  async purchase(itemName, cost) {
     try {
       // const approved = await this.isApproved();
       // if (!approved) {
@@ -141,9 +152,12 @@ class App extends React.Component {
         alert("Please click the \"APPROVE\" button before purchasing!");
         return;
       }
+      else if(this.state.tokenBalance < cost) {
+        alert("You don't have enough PenguinCoins!");
+        return;
+      }
       const transaction = await dappContract.methods.purchase(itemName).send({from: this.state.userAccount});
       console.log(transaction);
-      // alert(purchased ? `Successfully purchased ${itemName}!` : "Uh-oh! Purchase unsuccessful.");
     } catch (error) {
       console.error(error);
     }
@@ -154,7 +168,6 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
-          {/* <p>ERC20/BEP20 Token & Dapp Demo</p> */}
           <div id="buy" className="contractInteraction">
               <p>"Buy" 10,000 PenguinCoins</p>
               {/* <span class="fas fa-arrow-right"></span> */}
@@ -164,14 +177,14 @@ class App extends React.Component {
         </header>
         <main>
           <Sidebar>
-            <Purchasable label="Walk" id="walk" cost={this.state.costs.walk} onClick={() => this.purchase("walk")}/>
-            <Purchasable label="Jump" id="jump" cost={this.state.costs.jump} onClick={() => this.purchase("jump")}/>
-            <Purchasable label="Spin" id="spin" cost={this.state.costs.spin} onClick={() => this.purchase("spin")}/>
-            <Purchasable label="Wave" id="wave" cost={this.state.costs.wave} onClick={() => this.purchase("wave")}/>
-            <Purchasable label="Speak" id="speak" cost={this.state.costs.speak} onClick={() => this.purchase("speak")}/>
-            <Purchasable label="Top Hat" id="topHat" cost={this.state.costs.topHat} onClick={() => this.purchase("topHat")}/>
-            <Purchasable label="Monacle" id="monacle" cost={this.state.costs.monacle} onClick={() => this.purchase("monacle")}/>
-            <Purchasable label="Lollipop" id="lollipop" cost={this.state.costs.lollipop} onClick={() => this.purchase("lollipop")}/>
+            <Purchasable label="Walk" item="walk" cost={this.state.costs.walk} onClick={this.purchase}/>
+            <Purchasable label="Jump" item="jump" cost={this.state.costs.jump} onClick={this.purchase}/>
+            <Purchasable label="Spin" item="spin" cost={this.state.costs.spin} onClick={this.purchase}/>
+            <Purchasable label="Wave" item="wave" cost={this.state.costs.wave} onClick={this.purchase}/>
+            <Purchasable label="Speak" item="speak" cost={this.state.costs.speak} onClick={this.purchase}/>
+            <Purchasable label="Top Hat" item="topHat" cost={this.state.costs.topHat} onClick={this.purchase}/>
+            <Purchasable label="Monocle" item="monocle" cost={this.state.costs.monocle} onClick={this.purchase}/>
+            <Purchasable label="Lollipop" item="lollipop" cost={this.state.costs.lollipop} onClick={this.purchase}/>
           </Sidebar>
           <div className="App-playArea">
             <h1>Hi, I'm Steve!</h1>
@@ -181,7 +194,7 @@ class App extends React.Component {
               <button onClick={this.approveToken}>APPROVE</button>
             </div>
             <h2 id="spend" className={this.state.approved ? "" : "hidden"}>Spend your PenguinCoins to buy accessories and skills for me.</h2>
-            <Penguin />
+            <Penguin costs={this.state.costs}/>
             {/* <div id="buy" className="contractInteraction"> */}
               {/* <h2>"Buy" 10,000 PenguinCoins!</h2> */}
               {/* <button onClick={this.buyTokens}>BUY</button> */}

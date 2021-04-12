@@ -12,6 +12,10 @@ h2 {
   margin: 0;
 }
 
+button {
+  cursor: pointer;
+}
+
 .hidden,
 [hidden] {
   display: none !important;
