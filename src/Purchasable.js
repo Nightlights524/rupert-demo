@@ -2,14 +2,28 @@
 import './Purchasable.css';
 import logo from './logo.svg';
 
-function Purchasable({label, item, cost, onClick}) {
+function Purchasable({label, item, cost, keyBinding, onClickUnowned, onClickOwned}) {
+  const owned = cost === "OWNED";
   return (
-    <div className="Purchasable" onClick={() => onClick(item, cost)}>
+    <div className="Purchasable" onClick={owned ? onClickOwned : () => onClickUnowned(item, cost)}>
       <img src={logo} className="Purchasable-icon" alt={label} />
-      <p className="Purchasable-label">{label}: {cost}</p>
+      <p className="Purchasable-label">{label}: {owned ? keyBinding : cost}</p>
     </div>
   );
 }
+
+// function SkillPurchasable(props) {
+//   return (
+//     <Purchasable {...props}/>
+//   );
+// }
+
+// function AccessoryPurchasable(props) {
+//   return (
+//     <Purchasable {...props}
+//     />
+//   );
+// }
 
 
 

@@ -170,3 +170,42 @@ body {
 .penguin * {
   position: absolute;
 }
+
+/* .penguin-container { */
+  /* animation: Penguin-jump 0.4s ease; */
+  /* animation: Penguin-spin 0.5s linear; */
+/* } */
+
+.penguin-jump {
+  animation: Penguin-jump 0.4s ease;
+  /* animation: Penguin-jump 0.4s infinite; */
+}
+
+.penguin-spin {
+  /* animation: Penguin-spin 0.4s linear; */
+  animation: Penguin-spin 0.5s;
+}
+
+@keyframes Penguin-jump {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes Penguin-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes Penguin-wave {
+}

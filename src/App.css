@@ -16,10 +16,10 @@ button {
   cursor: pointer;
 }
 
-.hidden,
+/* .hidden,
 [hidden] {
   display: none !important;
-}
+} */
 
 .App {
   text-align: center;

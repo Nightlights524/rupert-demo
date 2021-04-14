@@ -50,13 +50,6 @@ class App extends React.Component {
         lollipop: null
       }
     };
-    this.updateTokenBalance = this.updateTokenBalance.bind(this);
-    this.updateCosts = this.updateCosts.bind(this);
-    this.updateApproval = this.updateApproval.bind(this);
-    // this.isApproved = this.isApproved.bind(this);
-    this.approveToken = this.approveToken.bind(this);
-    this.buyTokens = this.buyTokens.bind(this);
-    this.purchase = this.purchase.bind(this);
   }
 
   componentDidMount() {
@@ -78,7 +71,7 @@ class App extends React.Component {
     checkForMetamask();
   }
 
-  async updateTokenBalance() {
+  updateTokenBalance = async () => {
     try {
       const tokenBalance = await tokenContract.methods.balanceOf(this.state.userAccount).call();
       if (tokenBalance !== this.state.tokenBalance) {
@@ -89,7 +82,7 @@ class App extends React.Component {
     }
   }
 
-  async updateCosts() {
+  updateCosts = async () => {
     try {
       const ownedPurchasables = await dappContract.methods.getOwnedPurchasables(this.state.userAccount).call();
       const costs = {};
@@ -107,7 +100,7 @@ class App extends React.Component {
     }
   }
   
-  async updateApproval() {
+  updateApproval = async () => {
     try {
       const allowance = await tokenContract.methods.allowance(this.state.userAccount, dappContractAddress).call();
       const approved = parseInt(allowance) >= tokenApprovalThreshold;
@@ -119,7 +112,7 @@ class App extends React.Component {
     }
   }
   
-  // async isApproved() {
+  // isApproved = async () => {
   //   try {
   //     const allowance = await tokenContract.methods.allowance(this.state.userAccount, dappContractAddress).call();
   //     return parseInt(allowance) >= tokenApprovalThreshold;
@@ -128,7 +121,7 @@ class App extends React.Component {
   //   }
   // }
   
-  async approveToken() {
+  approveToken = async () => {
     try {
       await tokenContract.methods.approve(dappContractAddress, tokenApprovalAmount).send({from: this.state.userAccount});
     } catch (error) {
@@ -136,7 +129,7 @@ class App extends React.Component {
     }
   }
   
-  async buyTokens() {
+  buyTokens = async () => {
     try {
       await tokenContract.methods.buyTokens(10000).send({from: this.state.userAccount});
     } catch (error) {
@@ -144,7 +137,7 @@ class App extends React.Component {
     }
   }
   
-  async purchase(itemName, cost) {
+  purchase = async (itemName, cost) => {
     try {
       // const approved = await this.isApproved();
       // if (!approved) {
@@ -177,29 +170,83 @@ class App extends React.Component {
         </header>
         <main>
           <Sidebar>
-            <Purchasable label="Walk" item="walk" cost={this.state.costs.walk} onClick={this.purchase}/>
-            <Purchasable label="Jump" item="jump" cost={this.state.costs.jump} onClick={this.purchase}/>
-            <Purchasable label="Spin" item="spin" cost={this.state.costs.spin} onClick={this.purchase}/>
-            <Purchasable label="Wave" item="wave" cost={this.state.costs.wave} onClick={this.purchase}/>
-            <Purchasable label="Speak" item="speak" cost={this.state.costs.speak} onClick={this.purchase}/>
-            <Purchasable label="Top Hat" item="topHat" cost={this.state.costs.topHat} onClick={this.purchase}/>
-            <Purchasable label="Monocle" item="monocle" cost={this.state.costs.monocle} onClick={this.purchase}/>
-            <Purchasable label="Lollipop" item="lollipop" cost={this.state.costs.lollipop} onClick={this.purchase}/>
+            <Purchasable
+              label="Walk"
+              item="walk" 
+              cost={this.state.costs.walk}
+              keyBinding="A (left) &amp; D (right)"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Jump"
+              item="jump"
+              cost={this.state.costs.jump}
+              keyBinding="Space Bar"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Spin"
+              item="spin"
+              cost={this.state.costs.spin}
+              keyBinding="S"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Wave"
+              item="wave"
+              cost={this.state.costs.wave}
+              keyBinding="E"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Speak"
+              item="speak"
+              cost={this.state.costs.speak}
+              keyBinding="Shift"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Top Hat"
+              item="topHat"
+              cost={this.state.costs.topHat}
+              keyBinding="T"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Monocle"
+              item="monocle"
+              cost={this.state.costs.monocle}
+              keyBinding="M"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
+            <Purchasable
+              label="Lollipop"
+              item="lollipop"
+              cost={this.state.costs.lollipop}
+              keyBinding="L"
+              onClickUnowned={this.purchase}
+              onClickOwned={() => {}}
+            />
           </Sidebar>
           <div className="App-playArea">
             <h1>Hi, I'm Steve!</h1>
-            <div id="approval" className={this.state.approved ? "hidden contractInteraction" : "contractInteraction"}>
-              <h2>Approve PenguinCoin to get started</h2>
-              {/* <span class="fas fa-arrow-right"></span> */}
-              <button onClick={this.approveToken}>APPROVE</button>
-            </div>
-            <h2 id="spend" className={this.state.approved ? "" : "hidden"}>Spend your PenguinCoins to buy accessories and skills for me.</h2>
-            <Penguin costs={this.state.costs}/>
-            {/* <div id="buy" className="contractInteraction"> */}
-              {/* <h2>"Buy" 10,000 PenguinCoins!</h2> */}
-              {/* <button onClick={this.buyTokens}>BUY</button> */}
-            {/* </div> */}
-            <p>CSS penguin by FreeCodeCamp.com</p>
+            {!this.state.approved &&
+              <div className="contractInteraction">
+                <h2>Approve PenguinCoin to get started</h2>
+                {/* <span class="fas fa-arrow-right"></span> */}
+                <button onClick={this.approveToken}>APPROVE</button>
+              </div>
+            }
+            {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
+            <Penguin costs={this.state.costs} />
+            <p>CSS penguin design by FreeCodeCamp.com</p>
           </div>
         </main>
       </div>
