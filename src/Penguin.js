@@ -2,15 +2,15 @@ import React from 'react';
 import './Penguin.css';
 
 const keyBindings = {
-  walkLeft: "a",
-  walkRight: "d",
+  walkLeft: "A",
+  walkRight: "D",
   jump: " ",
-  spin: "s",
-  wave: "e",
+  spin: "S",
+  wave: "E",
   speak: "Shift",
-  topHat: "t",
-  monocle: "m",
-  lollipop: "l",
+  topHat: "T",
+  monocle: "M",
+  lollipop: "L",
 }
 
 class Penguin extends React.Component {
@@ -37,7 +37,7 @@ class Penguin extends React.Component {
   }
 
   handleKeyPress = (event) => {
-    const key = event.key;
+    const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
     switch (key) {
       case keyBindings.walkLeft:
       case keyBindings.walkRight:
@@ -101,7 +101,7 @@ class Penguin extends React.Component {
     let accessory;
     switch (pressedKey) {
       case keyBindings.topHat:
-        accessory = "Top hat";
+        accessory = "Top Hat";
         break;
       case keyBindings.monocle:
         accessory = "Monocle";

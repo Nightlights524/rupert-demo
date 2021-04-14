@@ -1,11 +1,9 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import Web3 from 'web3';
 import {checkForMetamask} from './Metamask.js';
 import {dappContractABI} from './dappContract_abi.js'; // CHANGE ABI NAME?
 import {tokenContractABI} from './tokenContract_abi.js'; // CHANGE ABI NAME?
-// import * as ContractUtils from "./ContractUtils.js";
 import Penguin from './Penguin.js';
 import Sidebar from './Sidebar.js';
 import Purchasable from './Purchasable.js';
@@ -21,20 +19,10 @@ const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddre
 const tokenApprovalAmount = 24000000;
 const tokenApprovalThreshold = 1000;
 
-// const keyBindings = {
-//   walk: "Left-Right",
-//   jump: "Up",
-//   spin: "S",
-//   wave: "W",
-//   speak: "",
-//   topHat: "T",
-//   monocle: "M",
-//   lollipop: "L"
-// }
-
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.penguin = React.createRef();
     this.state = {
       userAccount: "(connecting wallet...)",
       tokenBalance: 0,
@@ -184,7 +172,7 @@ class App extends React.Component {
               cost={this.state.costs.jump}
               keyBinding="Space Bar"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.jump()}}
             />
             <Purchasable
               label="Spin"
@@ -192,7 +180,7 @@ class App extends React.Component {
               cost={this.state.costs.spin}
               keyBinding="S"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.spin()}}
             />
             <Purchasable
               label="Wave"
@@ -200,7 +188,7 @@ class App extends React.Component {
               cost={this.state.costs.wave}
               keyBinding="E"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.wave()}}
             />
             <Purchasable
               label="Speak"
@@ -208,7 +196,7 @@ class App extends React.Component {
               cost={this.state.costs.speak}
               keyBinding="Shift"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.speak()}}
             />
             <Purchasable
               label="Top Hat"
@@ -216,7 +204,7 @@ class App extends React.Component {
               cost={this.state.costs.topHat}
               keyBinding="T"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.toggleAccessory("T")}}
             />
             <Purchasable
               label="Monocle"
@@ -224,7 +212,7 @@ class App extends React.Component {
               cost={this.state.costs.monocle}
               keyBinding="M"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.toggleAccessory("M")}}
             />
             <Purchasable
               label="Lollipop"
@@ -232,7 +220,7 @@ class App extends React.Component {
               cost={this.state.costs.lollipop}
               keyBinding="L"
               onClickUnowned={this.purchase}
-              onClickOwned={() => {}}
+              onClickOwned={() => {this.penguin.current.toggleAccessory("L")}}
             />
           </Sidebar>
           <div className="App-playArea">
@@ -245,7 +233,7 @@ class App extends React.Component {
               </div>
             }
             {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
-            <Penguin costs={this.state.costs} />
+            <Penguin ref={this.penguin} costs={this.state.costs} />
             <p>CSS penguin design by FreeCodeCamp.com</p>
           </div>
         </main>
