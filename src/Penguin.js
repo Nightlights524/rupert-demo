@@ -6,7 +6,8 @@ const keyBindings = {
   walkRight: "D",
   jump: " ",
   spin: "S",
-  wave: "E",
+  waveLeftHand: "E",
+  waveRightHand: "Q",
   speak: "Shift",
   topHat: "T",
   monocle: "M",
@@ -17,6 +18,8 @@ class Penguin extends React.Component {
   constructor(props) {
     super(props);
     this.penguinContainer = React.createRef();
+    this.penguinLeftHand = React.createRef();
+    this.penguinRightHand = React.createRef();
     this.penguinChirp = React.createRef();
     this.topHat = React.createRef();
     this.monocle = React.createRef();
@@ -34,12 +37,36 @@ class Penguin extends React.Component {
     document.addEventListener('keydown', this.handleKeyPress);
     this.penguinContainer.current.addEventListener('animationstart', this.handleAnimationStart);
     this.penguinContainer.current.addEventListener('animationend', this.handleAnimationEnd);
+
+    this.penguinLeftHand.current.addEventListener('animationstart', this.handleAnimationStart);
+    this.penguinLeftHand.current.addEventListener('animationend', () => {
+      this.animationRunning = false;
+      this.penguinLeftHand.current.className = "left-hand";
+    });
+
+    this.penguinRightHand.current.addEventListener('animationstart', this.handleAnimationStart);
+    this.penguinRightHand.current.addEventListener('animationend', () => {
+      this.animationRunning = false;
+      this.penguinRightHand.current.className = "right-hand";
+    });
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyPress);
-    this.penguinContainer.current.addEventListener('animationstart', this.handleAnimationStart);
+    this.penguinContainer.current.removeEventListener('animationstart', this.handleAnimationStart);
     this.penguinContainer.current.removeEventListener('animationend', this.handleAnimationEnd);
+
+    this.penguinLeftHand.current.removeEventListener('animationstart', this.handleAnimationStart);
+    this.penguinLeftHand.current.removeEventListener('animationend', () => {
+      this.animationRunning = false;
+      this.penguinLeftHand.current.className = "left-hand";
+    });
+
+    this.penguinRightHand.current.removeEventListener('animationstart', this.handleAnimationStart);
+    this.penguinRightHand.current.removeEventListener('animationend', () => {
+      this.animationRunning = false;
+      this.penguinRightHand.current.className = "right-hand";
+    });
   }
 
   handleKeyPress = (event) => {
@@ -62,8 +89,9 @@ class Penguin extends React.Component {
       case keyBindings.spin:
         this.spin();
         break;
-      case keyBindings.wave:
-        this.wave();
+      case keyBindings.waveLeftHand:
+      case keyBindings.waveRightHand:
+        this.wave(key);
         break;
       case keyBindings.speak:
         this.speak();
@@ -126,6 +154,7 @@ class Penguin extends React.Component {
     //     window.requestAnimationFrame(step);
     //   }
     // }
+    
 
     // window.requestAnimationFrame(step);
 
@@ -161,9 +190,14 @@ class Penguin extends React.Component {
     }
   }
   
-  wave = () => {
+  wave = (pressedKey) => {
     if (this.props.costs.wave === "OWNED") {
-      alert("Wave");
+      if(pressedKey === keyBindings.waveLeftHand) {
+        this.penguinLeftHand.current.classList.add("penguin-wave-left");
+      }
+      else if(pressedKey === keyBindings.waveRightHand) {
+        this.penguinRightHand.current.classList.add("penguin-wave-right");
+      }
     }
   }
   
@@ -201,8 +235,8 @@ class Penguin extends React.Component {
         >
         <div className="penguin">
           <div className="penguin-bottom">
-            <div className="right-hand"></div>
-            <div className="left-hand"></div>
+            <div className="right-hand" ref={this.penguinRightHand}></div>
+            <div className="left-hand" ref={this.penguinLeftHand}></div>
             <div className="right-feet"></div>
             <div className="left-feet"></div>
           </div>
