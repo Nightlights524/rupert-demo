@@ -22,22 +22,15 @@ class Penguin extends React.Component {
     this.monocle = React.createRef();
     this.lollipop = React.createRef();
     this.animationRunning = false;
-    // this.walkLeftPressed = false;
-    // this.walkRightPressed = false;
     this.preAnimationX = null;
     this.preAnimationY = null;
     this.state = {
-    //   // preAnimationX: 0,
-    //   // preAnimationY: 0,
       offsetX: 0,
       offsetY: 0
     };
   }
 
   componentDidMount() {
-    // console.log(`MountedX: ${this.penguinContainer.current.getBoundingClientRect().x}`);
-    // console.log(`MountedY: ${this.penguinContainer.current.getBoundingClientRect().y}`);
-
     document.addEventListener('keydown', this.handleKeyPress);
     this.penguinContainer.current.addEventListener('animationstart', this.handleAnimationStart);
     this.penguinContainer.current.addEventListener('animationend', this.handleAnimationEnd);
@@ -56,9 +49,6 @@ class Penguin extends React.Component {
 
     this.preAnimationX = this.penguinContainer.current.getBoundingClientRect().x;
     this.preAnimationY = this.penguinContainer.current.getBoundingClientRect().y;
-
-    // console.log(`PreAnimationX: ${this.penguinContainer.current.getBoundingClientRect().x}`);
-    // console.log(`PreAnimationY: ${this.penguinContainer.current.getBoundingClientRect().y}`);
 
     const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
     switch (key) {
@@ -93,14 +83,9 @@ class Penguin extends React.Component {
   }
 
   handleAnimationEnd = (event) => {
-    // console.log(`AnimationEndX: ${this.penguinContainer.current.getBoundingClientRect().x}`);
-    // console.log(`AnimationEndY: ${this.penguinContainer.current.getBoundingClientRect().y}`);
     const changeX = Math.round(this.penguinContainer.current.getBoundingClientRect().x - this.preAnimationX);
     const changeY = Math.round(this.penguinContainer.current.getBoundingClientRect().y - this.preAnimationY);
     
-    console.log(changeX);
-    console.log(changeY);
-
     this.setState((prevState, currentProps) => {
       return {
         offsetX: prevState.offsetX + changeX,
