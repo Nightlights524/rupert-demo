@@ -177,11 +177,11 @@ body {
 }
 
 .penguin-walk-left {
-  animation: Penguin-walk-left 0.4s linear forwards;
+  animation: Penguin-walk-left 0.2s linear forwards;
 }
 
 .penguin-walk-right {
-  animation: Penguin-walk-right 0.4s linear forwards;
+  animation: Penguin-walk-right 0.2s linear forwards;
 }
 
 .penguin-jump {

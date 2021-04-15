@@ -13,10 +13,6 @@ const keyBindings = {
   lollipop: "L",
 }
 
-// let frameRate = 1000/60; // 60 frames per second
-// let opacity = 100;
-// let animationID = null;
-
 class Penguin extends React.Component {
   constructor(props) {
     super(props);
@@ -39,31 +35,18 @@ class Penguin extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.penguinContainer.current.getBoundingClientRect().x);
-    console.log(this.penguinContainer.current.getBoundingClientRect().y);
+    // console.log(`MountedX: ${this.penguinContainer.current.getBoundingClientRect().x}`);
+    // console.log(`MountedY: ${this.penguinContainer.current.getBoundingClientRect().y}`);
 
     document.addEventListener('keydown', this.handleKeyPress);
-    
-    this.penguinContainer.current.addEventListener('animationstart', () => {
-      this.animationRunning = true;
-    });
-    
-    this.penguinContainer.current.addEventListener('animationend', () => {
-      this.animationRunning = false;
-      this.penguinContainer.current.className = "penguin-container";
-    });
+    this.penguinContainer.current.addEventListener('animationstart', this.handleAnimationStart);
+    this.penguinContainer.current.addEventListener('animationend', this.handleAnimationEnd);
   }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyPress);
-    
-    this.penguinContainer.current.addEventListener('animationstart', () => {
-      this.animationRunning = true;
-    });
-
-    this.penguinContainer.current.removeEventListener('animationend', () => {
-      this.animationRunning = false;
-      this.penguinContainer.current.className = "penguin-container";
-    });
+    this.penguinContainer.current.addEventListener('animationstart', this.handleAnimationStart);
+    this.penguinContainer.current.removeEventListener('animationend', this.handleAnimationEnd);
   }
 
   handleKeyPress = (event) => {
@@ -73,8 +56,9 @@ class Penguin extends React.Component {
 
     this.preAnimationX = this.penguinContainer.current.getBoundingClientRect().x;
     this.preAnimationY = this.penguinContainer.current.getBoundingClientRect().y;
-    console.log(this.penguinContainer.current.getBoundingClientRect().x);
-    console.log(this.penguinContainer.current.getBoundingClientRect().y);
+
+    // console.log(`PreAnimationX: ${this.penguinContainer.current.getBoundingClientRect().x}`);
+    // console.log(`PreAnimationY: ${this.penguinContainer.current.getBoundingClientRect().y}`);
 
     const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
     switch (key) {
@@ -104,18 +88,29 @@ class Penguin extends React.Component {
     }
   }
 
-  // disappear = () => {
-  //     // opacity--;
-  //     // this.penguinContainer.current.style.opacity = opacity/100;
-  //     // if (opacity > 0){
-  //     //     setTimeout(this.disappear,frameRate);
-  //     // }
-  //     opacity--;
-  //     this.penguinContainer.current.style.opacity = opacity/100;
-  //     if (opacity > 0){
-  //         requestAnimationFrame(this.disappear);
-  //     }
-  // }
+  handleAnimationStart = (event) => {
+    this.animationRunning = true;
+  }
+
+  handleAnimationEnd = (event) => {
+    // console.log(`AnimationEndX: ${this.penguinContainer.current.getBoundingClientRect().x}`);
+    // console.log(`AnimationEndY: ${this.penguinContainer.current.getBoundingClientRect().y}`);
+    const changeX = Math.round(this.penguinContainer.current.getBoundingClientRect().x - this.preAnimationX);
+    const changeY = Math.round(this.penguinContainer.current.getBoundingClientRect().y - this.preAnimationY);
+    
+    console.log(changeX);
+    console.log(changeY);
+
+    this.setState((prevState, currentProps) => {
+      return {
+        offsetX: prevState.offsetX + changeX,
+        offsetY: prevState.offsetY + changeY
+      };
+    }, () => {
+      this.animationRunning = false;
+      this.penguinContainer.current.className = "penguin-container";
+    });
+  }
 
   // disappear = () => {
   //     // opacity--;
@@ -128,31 +123,6 @@ class Penguin extends React.Component {
   //     if (opacity > 0){
   //         requestAnimationFrame(this.moveTwo);
   //     }
-  // }
-
-  // myMove = (offsetX) => {
-  //   let elem = this.penguinContainer.current;
-  //   let pos = parseInt(elem.style.left, 10);
-  //   let targetPos = pos + offsetX;
-  //   clearInterval(animationID);
-  //   animationID = setInterval(frame, 5);
-
-  //   function frame() {
-  //     if (pos === targetPos) {
-  //       clearInterval(animationID);
-  //     } else {
-  //       if (offsetX > 0) {
-  //         pos++;
-  //       }
-  //       else if (offsetX < 0) {
-  //         pos--;
-  //       }
-  //       // pos++;
-  //       elem.style.left = pos + 'px';
-  //       console.log(pos);
-  //       console.log(targetPos);
-  //     }
-  //   }
   // }
 
   walk = (pressedKey) => {
@@ -184,37 +154,13 @@ class Penguin extends React.Component {
     //   fill: "forwards"
     // });
 
-    // this.myMove();
-    // this.moveTwo(100);
-
-    // console.log(document.querySelector(".penguin-container"));
-    // console.log(this.penguinContainer.current.getBoundingClientRect().x);
-    // this.penguinContainer.current.x = 24;
-    // console.log(this.penguinContainer.current.getBoundingClientRect().x);
-    
-    // console.log(`PenguinX: ${this.penguinContainer.current.x}`);
-    // console.log(`PenguinX: ${this.penguinContainer.current.y}`);
     if (this.props.costs.walk === "OWNED") {
-      // const positionString = this.penguinContainer.current.style.left.split("px")[0];
-      // let currentPosition = parseInt(positionString);
-
       if(pressedKey === keyBindings.walkLeft) {
-        // this.myMove(-100);
-        // this.setState({offsetX: "20px"});
-        // currentPosition -= 20;
         this.penguinContainer.current.classList.add("penguin-walk-left");
-        // this.disappear();
-        // requestAnimationFrame(this.disappear);
       }
       else if(pressedKey === keyBindings.walkRight) {
-        // this.myMove(100);
-        // currentPosition += 20;
         this.penguinContainer.current.classList.add("penguin-walk-right");
-        // this.setState({offsetX: -200});
-        // this.disappear();
-        // requestAnimationFrame(this.disappear);
       }
-      // this.penguinContainer.current.style.left = `${currentPosition}px`;
     }
   }
   
