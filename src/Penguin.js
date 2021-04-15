@@ -2,6 +2,7 @@ import React from 'react';
 import './Penguin.css';
 
 const keyBindings = {
+  resetPosition: "C",
   walkLeft: "A",
   walkRight: "D",
   jump: " ",
@@ -79,6 +80,9 @@ class Penguin extends React.Component {
 
     const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
     switch (key) {
+      case keyBindings.resetPosition:
+        this.resetPosition();
+        break;
       case keyBindings.walkLeft:
       case keyBindings.walkRight:
         this.walk(key);
@@ -137,6 +141,13 @@ class Penguin extends React.Component {
   //         requestAnimationFrame(this.moveTwo);
   //     }
   // }
+
+  resetPosition = () => {
+    this.setState({
+      offsetX: 0,
+      offsetY: 0
+    });
+  }
 
   walk = (pressedKey) => {
     // const element = this.penguinContainer.current;

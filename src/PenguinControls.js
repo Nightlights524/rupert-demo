@@ -1,10 +1,11 @@
 const keyBindings = {
+  resetPosition: "C",
   walkLeft: "A",
   walkRight: "D",
   jump: " ",
   spin: "S",
-  waveLeft: "E",
-  waveRight: "Q",
+  waveLeftHand: "E",
+  waveRightHand: "Q",
   speak: "Shift",
   topHat: "T",
   monocle: "M",

@@ -162,7 +162,7 @@ class App extends React.Component {
               label="Walk"
               item="walk" 
               cost={this.state.costs.walk}
-              keyBinding="A (left) &amp; D (right)"
+              keyBinding="A (left) - D (right) - C (reset)"
               onClickUnowned={this.purchase}
               onClickOwned={() => {}}
             />
