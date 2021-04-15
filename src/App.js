@@ -234,7 +234,7 @@ class App extends React.Component {
             }
             {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
             <Penguin ref={this.penguin} costs={this.state.costs} />
-            <p>CSS penguin design by FreeCodeCamp.com</p>
+            <p>CSS penguin designed by FreeCodeCamp.com</p>
           </div>
         </main>
       </div>
