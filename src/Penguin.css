@@ -200,7 +200,7 @@ body {
   /* animation: Penguin-wave 2s linear; */
   animation-name: Penguin-wave-left; 
   animation-duration: 0.3s;
-  /* animation-iteration-count: 2; */
+  animation-iteration-count: 2;
   /* transform-origin: 50% 40%; */
   /* transform-origin: bottom right;  */
   animation-timing-function: linear;
@@ -210,7 +210,7 @@ body {
   /* animation: Penguin-wave 2s linear; */
   animation-name: Penguin-wave-right; 
   animation-duration: 0.3s;
-  /* animation-iteration-count: 2; */
+  animation-iteration-count: 2;
   /* transform-origin: 50% 50%; */
   animation-timing-function: linear;
 }
@@ -292,31 +292,31 @@ body {
 } */
 
 @keyframes Penguin-wave-left {
-  25% { 
+  33% { 
     transform: rotate(-110deg);
     left: 135px;
     top: -20px;
   }
 
-  50% {
+  /* 50% {
     transform: rotate(-110deg);
     left: 135px;
     top: -20px;
-  }
+  } */
 
-  50% {
+  /* 50% {
     transform: rotate(-110deg);
     left: 135px;
     top: -20px;
-  }
+  } */
 }
 
 @keyframes Penguin-wave-right {
-  25% { 
+  /* 25% { 
     transform: rotate(110deg);
     left: -20px;
     top: -20px;
-  }
+  } */
 
   50% {
     transform: rotate(110deg);
@@ -324,11 +324,11 @@ body {
     top: -20px;
   }
 
-  50% {
+  /* 50% {
     transform: rotate(110deg);
     left: -20px;
     top: -20px;
-  }
+  } */
 }
 
 
