@@ -143,10 +143,11 @@ class Penguin extends React.Component {
   // }
 
   resetPosition = () => {
-    this.setState({
-      offsetX: 0,
-      offsetY: 0
-    });
+    if (this.state.offsetX === 0 &&
+        this.state.offsetY === 0) {
+          return;
+    }
+    this.penguinContainer.current.classList.add("penguin-reset-position");
   }
 
   walk = (pressedKey) => {
