@@ -41,7 +41,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(async () => {
+    this.metamaskInterval = setInterval(async () => {
       // Check if account has changed
       try {
         const accounts = await web3.eth.getAccounts();
@@ -57,6 +57,10 @@ class App extends React.Component {
     }, 1000);
 
     checkForMetamask();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.metamaskInterval);
   }
 
   updateTokenBalance = async () => {
@@ -186,7 +190,7 @@ class App extends React.Component {
               label="Wave"
               item="wave"
               cost={this.state.costs.wave}
-              keyBinding="E"
+              keyBinding="Q - E"
               onClickUnowned={this.purchase}
               onClickOwned={() => {this.penguin.current.wave()}}
             />
@@ -234,7 +238,7 @@ class App extends React.Component {
             }
             {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
             <Penguin ref={this.penguin} costs={this.state.costs} />
-            <p>CSS penguin designed by FreeCodeCamp.com</p>
+            <p>Penguin design by FreeCodeCamp.com</p>
           </div>
         </main>
       </div>
