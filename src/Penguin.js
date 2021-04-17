@@ -283,6 +283,8 @@ class Penguin extends React.Component {
           <div className="top-hat" ref={this.topHat}>
             <div className="top-hat-top"></div>
             <div className="top-hat-middle"></div>
+            <div className="top-hat-stripe-background"></div>
+            <div className="top-hat-stripe"></div>
             <div className="top-hat-brim"></div>
           </div>
           <div className="monocle" ref={this.monocle}>

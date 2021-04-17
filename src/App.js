@@ -228,15 +228,17 @@ class App extends React.Component {
             />
           </Sidebar>
           <div className="App-playArea">
-            <h1>Hi, I'm Steve!</h1>
-            {!this.state.approved &&
-              <div className="contractInteraction">
-                <h2>Approve PenguinCoin to get started</h2>
-                {/* <span class="fas fa-arrow-right"></span> */}
-                <button onClick={this.approveToken}>APPROVE</button>
-              </div>
-            }
-            {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
+            <div className="App-playArea-instructions">
+              <h1>Hi, I'm Steve!</h1>
+              {!this.state.approved &&
+                <div className="contractInteraction">
+                  <h2>Approve PenguinCoin to get started</h2>
+                  {/* <span class="fas fa-arrow-right"></span> */}
+                  <button onClick={this.approveToken}>APPROVE</button>
+                </div>
+              }
+              {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
+            </div>
             <Penguin ref={this.penguin} costs={this.state.costs} />
             <p>Penguin character design by FreeCodeCamp.com</p>
           </div>
