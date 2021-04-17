@@ -166,7 +166,7 @@ class App extends React.Component {
               label="Walk"
               item="walk" 
               cost={this.state.costs.walk}
-              keyBinding="A (left) - D (right) - C (reset)"
+              keyBinding="A - D"
               onClickUnowned={this.purchase}
               onClickOwned={() => {}}
             />
@@ -174,7 +174,7 @@ class App extends React.Component {
               label="Jump"
               item="jump"
               cost={this.state.costs.jump}
-              keyBinding="Space Bar"
+              keyBinding="W"
               onClickUnowned={this.purchase}
               onClickOwned={() => {this.penguin.current.jump()}}
             />
@@ -238,7 +238,7 @@ class App extends React.Component {
             }
             {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
             <Penguin ref={this.penguin} costs={this.state.costs} />
-            <p>Penguin design by FreeCodeCamp.com</p>
+            <p>Penguin character design by FreeCodeCamp.com</p>
           </div>
         </main>
       </div>

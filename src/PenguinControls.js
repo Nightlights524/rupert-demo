@@ -2,7 +2,7 @@ const keyBindings = {
   resetPosition: "C",
   walkLeft: "A",
   walkRight: "D",
-  jump: " ",
+  jump: "W",
   spin: "S",
   waveLeftHand: "E",
   waveRightHand: "Q",

@@ -5,7 +5,7 @@ const keyBindings = {
   resetPosition: "C",
   walkLeft: "A",
   walkRight: "D",
-  jump: " ",
+  jump: "W",
   spin: "S",
   waveLeftHand: "E",
   waveRightHand: "Q",
@@ -70,13 +70,17 @@ class Penguin extends React.Component {
     });
   }
 
+  setPreAnimationPosition = () => {
+    this.preAnimationX = this.penguinContainer.current.getBoundingClientRect().x;
+    this.preAnimationY = this.penguinContainer.current.getBoundingClientRect().y;
+  }
+
   handleKeyPress = (event) => {
     if (this.animationRunning) {
       return;
     }
 
-    this.preAnimationX = this.penguinContainer.current.getBoundingClientRect().x;
-    this.preAnimationY = this.penguinContainer.current.getBoundingClientRect().y;
+    this.setPreAnimationPosition();
 
     const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
     switch (key) {
@@ -180,6 +184,8 @@ class Penguin extends React.Component {
     //   fill: "forwards"
     // });
 
+    this.setPreAnimationPosition();
+
     if (this.props.costs.walk === "OWNED") {
       if(pressedKey === keyBindings.walkLeft) {
         this.penguinContainer.current.classList.add("penguin-walk-left");
@@ -191,12 +197,14 @@ class Penguin extends React.Component {
   }
   
   jump = () => {
+    this.setPreAnimationPosition();
     if (this.props.costs.jump === "OWNED") {
       this.penguinContainer.current.classList.add("penguin-jump");
     }
   }
   
   spin = () => {
+    this.setPreAnimationPosition();
     if (this.props.costs.spin === "OWNED") {
       this.penguinContainer.current.classList.add("penguin-spin");
     }

@@ -1,7 +1,4 @@
 .Purchasable {
-  /* border: 1px solid black; */
-  /* flex-shrink: 1; */
-  /* flex-grow: 1; */
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -9,20 +6,26 @@
 }
 
 .Purchasable:hover {
-  /* opacity: 0.7; */
-  /* background-color: rgb(53, 50, 50); */
   background-color: #444;
   cursor:pointer;
-  /* border: 1px solid white; */
+}
+
+.Purchasable-icon-container {
+  position: relative;
 }
 
 .Purchasable-icon {
   height: 5vh;
-  /* background-color: red; */
   margin: 0;
 }
 
+.Purchasable-checkmark {
+  background-color: #444;
+  position: absolute;
+  top: 37%;
+  left: 52%;
+}
+
 .Purchasable-label {
-  /* background-color: green; */
   margin: 0;
 }
