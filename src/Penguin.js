@@ -30,7 +30,7 @@ class Penguin extends React.Component {
     this.preAnimationY = null;
     this.state = {
       offsetX: 0,
-      offsetY: 0
+      offsetY: 0,
     };
   }
 
@@ -255,7 +255,12 @@ class Penguin extends React.Component {
         >
         <div className="penguin">
           <div className="penguin-bottom">
-            <div className="right-hand" ref={this.penguinRightHand}></div>
+            <div className="right-hand" ref={this.penguinRightHand}>
+              <div className="lollipop" ref={this.lollipop}>
+                <div className="lollipop-top"></div>
+                <div className="lollipop-stick"></div>
+              </div>
+            </div>
             <div className="left-hand" ref={this.penguinLeftHand}></div>
             <div className="right-feet"></div>
             <div className="left-feet"></div>
@@ -275,6 +280,16 @@ class Penguin extends React.Component {
             <div className="beak-top"></div>
             <div className="beak-bottom"></div>
           </div>
+          <div className="top-hat" ref={this.topHat}>
+            <div className="top-hat-top"></div>
+            <div className="top-hat-middle"></div>
+            <div className="top-hat-brim"></div>
+          </div>
+          <div className="monocle" ref={this.monocle}>
+            <div className="monocle-lens"></div>
+            <div className="monocle-string"></div>
+          </div>
+          {/* <div className="lollipop" ref={this.lollipop}></div> */}
         </div>
         <audio 
           ref={this.penguinChirp}
@@ -283,9 +298,9 @@ class Penguin extends React.Component {
           Your browser does not support the
           <code>audio</code> element.
         </audio>
-        <div className="top-hat" ref={this.topHat}></div>
-        <div className="monacle" ref={this.monocle}></div>
-        <div className="lollipop" ref={this.lollipop}></div>
+        {/* <div className="top-hat" ref={this.topHat}></div>
+        <div className="monocle" ref={this.monocle}></div>
+        <div className="lollipop" ref={this.lollipop}></div> */}
       </div>
     );
   }
