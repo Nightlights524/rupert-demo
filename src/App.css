@@ -16,6 +16,35 @@ button {
   cursor: pointer;
 }
 
+.button-utility {
+  position: relative;
+  top: 2px;
+  margin-left: 8px;
+  padding: 4px 6px 2px 6px;
+  /* border: 4px inset; */
+  /* border-width: 3px; */
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  overflow: hidden;
+  /* outline-style: double; */
+}
+
+.button-utility:focus {
+  background-color: #ddd;
+  /* border: 2px solid blue; */
+}
+
+.button-utility:hover {
+  background-color: #ddd;
+  outline: none;
+}
+
+.button-utility:active {
+  /* outline: none; */
+  /* border: 2px solid green; */
+}
+
 /* .hidden,
 [hidden] {
   display: none !important;

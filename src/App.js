@@ -119,6 +119,7 @@ class App extends React.Component {
     } catch (error) {
       console.error(error);
     }
+    document.activeElement.blur();
   }
   
   buyTokens = async () => {
@@ -127,6 +128,7 @@ class App extends React.Component {
     } catch (error) {
       console.error(error);
     }
+    document.activeElement.blur();
   }
   
   purchase = async (itemName, cost) => {
@@ -155,7 +157,7 @@ class App extends React.Component {
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
           <div id="buy" className="contractInteraction">
               <p>"Buy" 10,000 PenguinCoins</p>
-              <button onClick={this.buyTokens}>BUY</button>
+              <button className="button-utility" onClick={this.buyTokens}>BUY</button>
           </div>
           <p>{`Account: ${this.state.userAccount}`}</p>
         </header>
@@ -232,7 +234,7 @@ class App extends React.Component {
               {!this.state.approved &&
                 <div className="contractInteraction">
                   <h2>Approve PenguinCoin to get started</h2>
-                  <button onClick={this.approveToken}>APPROVE</button>
+                  <button className="button-utility" onClick={this.approveToken}>APPROVE</button>
                 </div>
               }
               {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
