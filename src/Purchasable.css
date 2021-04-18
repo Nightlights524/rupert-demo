@@ -2,7 +2,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  align-items: center;
   margin: 0;
+  background-color: #282c34;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  /* font-weight: bold; */
 }
 
 .Purchasable:hover {
@@ -16,7 +22,7 @@
 
 .Purchasable-icon {
   height: 5vh;
-  margin: 0;
+  /* margin: 0 auto; */
 }
 
 .Purchasable-checkmark {
