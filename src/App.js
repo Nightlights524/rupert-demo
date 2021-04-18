@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import Web3 from 'web3';
 import {checkForMetamask} from './Metamask.js';
-import {dappContractABI} from './dappContract_abi.js'; // CHANGE ABI NAME?
-import {tokenContractABI} from './tokenContract_abi.js'; // CHANGE ABI NAME?
+import {dappContractABI} from './dappContract_abi.js';
+import {tokenContractABI} from './tokenContract_abi.js';
 import Penguin from './Penguin.js';
 import Sidebar from './Sidebar.js';
 import Purchasable from './Purchasable.js';
@@ -11,10 +11,10 @@ import Purchasable from './Purchasable.js';
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
 const dappContractAddress = "0x467fbFc206697a5A2c4c81c4dAE6e13c26297ac1";
-const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress); // CHANGE ABI NAME?
+const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress);
 
 const tokenContractAddress = "0x745De1d08F137A4B3dfC60b7ac811ce2342b56CE";
-const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress); // CHANGE ABI NAME?
+const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
 
 const tokenApprovalAmount = 24000000;
 const tokenApprovalThreshold = 1000;
@@ -155,7 +155,6 @@ class App extends React.Component {
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
           <div id="buy" className="contractInteraction">
               <p>"Buy" 10,000 PenguinCoins</p>
-              {/* <span class="fas fa-arrow-right"></span> */}
               <button onClick={this.buyTokens}>BUY</button>
           </div>
           <p>{`Account: ${this.state.userAccount}`}</p>
@@ -233,13 +232,12 @@ class App extends React.Component {
               {!this.state.approved &&
                 <div className="contractInteraction">
                   <h2>Approve PenguinCoin to get started</h2>
-                  {/* <span class="fas fa-arrow-right"></span> */}
                   <button onClick={this.approveToken}>APPROVE</button>
                 </div>
               }
               {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
             </div>
-            <Penguin ref={this.penguin} costs={this.state.costs} />
+            <Penguin ref={this.penguin} costs={this.state.costs} accessories={this.state.accessories}/>
             <p>Penguin character design by FreeCodeCamp.com</p>
           </div>
         </main>
