@@ -199,7 +199,7 @@ class App extends React.Component {
               label="Speak"
               item="speak"
               cost={this.state.costs.speak}
-              keyBinding="Shift"
+              keyBinding="F"
               onClickUnowned={this.purchase}
               onClickOwned={() => {this.penguin.current.speak()}}
             />

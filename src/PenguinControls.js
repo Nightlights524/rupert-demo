@@ -6,7 +6,7 @@ const keyBindings = {
   spin: "S",
   waveLeftHand: "E",
   waveRightHand: "Q",
-  speak: "Shift",
+  speak: "F",
   topHat: "T",
   monocle: "M",
   lollipop: "L",

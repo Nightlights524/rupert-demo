@@ -32,6 +32,7 @@ button {
 
 .button-utility:focus {
   background-color: #ddd;
+  /* text-decoration: underline; */
   /* border: 2px solid blue; */
 }
 

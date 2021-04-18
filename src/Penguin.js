@@ -1,5 +1,6 @@
 import React from 'react';
 import './Penguin.css';
+import penguinChirp from './PenguinChirp.mp3';
 
 const keyBindings = {
   resetPosition: "C",
@@ -9,7 +10,7 @@ const keyBindings = {
   spin: "S",
   waveLeftHand: "E",
   waveRightHand: "Q",
-  speak: "Shift",
+  speak: "F",
   topHat: "T",
   monocle: "M",
   lollipop: "L",
@@ -153,8 +154,8 @@ class Penguin extends React.Component {
   }
 
   walk = (pressedKey) => {
-    this.setPreAnimationPosition();
-    if (this.props.costs.walk === "OWNED") {
+    if (!this.animationRunning && this.props.costs.walk === "OWNED") {
+      this.setPreAnimationPosition();
       if(pressedKey === keyBindings.walkLeft) {
         this.penguinContainer.current.classList.add("penguin-walk-left");
       }
@@ -165,21 +166,21 @@ class Penguin extends React.Component {
   }
   
   jump = () => {
-    this.setPreAnimationPosition();
-    if (this.props.costs.jump === "OWNED") {
+    if (!this.animationRunning && this.props.costs.jump === "OWNED") {
+      this.setPreAnimationPosition();
       this.penguinContainer.current.classList.add("penguin-jump");
     }
   }
   
   spin = () => {
-    this.setPreAnimationPosition();
-    if (this.props.costs.spin === "OWNED") {
+    if (!this.animationRunning && this.props.costs.spin === "OWNED") {
+      this.setPreAnimationPosition();
       this.penguinContainer.current.classList.add("penguin-spin");
     }
   }
   
   wave = (pressedKey) => {
-    if (this.props.costs.wave === "OWNED") {
+    if (!this.animationRunning && this.props.costs.wave === "OWNED") {
       if(pressedKey === keyBindings.waveLeftHand) {
         this.penguinLeftHand.current.classList.add("penguin-wave-left");
       }
@@ -190,9 +191,8 @@ class Penguin extends React.Component {
   }
   
   speak = () => {
-    if (this.props.costs.speak === "OWNED") {
-      alert("Speak");
-      this.penguinChirp.current.volume = 0.2;
+    if (!this.animationRunning && this.props.costs.speak === "OWNED") {
+      // this.penguinChirp.current.volume = 0.2;
       this.penguinChirp.current.play();
     }
   }
@@ -270,10 +270,7 @@ class Penguin extends React.Component {
             <div className="monocle-string"></div>
           </div>}
         </div>
-        <audio 
-          ref={this.penguinChirp}
-          src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
-        >
+        <audio src={penguinChirp} ref={this.penguinChirp}>
           Your browser does not support the
           <code>audio</code> element.
         </audio>
