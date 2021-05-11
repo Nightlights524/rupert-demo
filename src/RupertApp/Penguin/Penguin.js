@@ -1,5 +1,8 @@
 import React from 'react';
 import './Penguin.css';
+
+import * as styles from "./Penguin.module.css"
+
 import penguinChirp from './PenguinChirp.mp3';
 
 const keyBindings = {

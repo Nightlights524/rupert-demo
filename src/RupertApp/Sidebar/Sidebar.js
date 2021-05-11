@@ -1,8 +1,8 @@
-import './Sidebar.css';
+import * as styles from "./Sidebar.module.css"
 
 function Sidebar({children}) {
   return (
-    <div className="Sidebar">
+    <div className={styles.sidebar}>
       {children}
     </div>
   );

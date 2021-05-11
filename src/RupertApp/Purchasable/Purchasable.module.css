@@ -1,4 +1,4 @@
-.Purchasable {
+.purchasable {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -11,27 +11,27 @@
   /* font-weight: bold; */
 }
 
-.Purchasable:hover {
+.purchasable:hover {
   background-color: #444;
   cursor:pointer;
 }
 
-.Purchasable-icon-container {
+.iconContainer {
   position: relative;
 }
 
-.Purchasable-icon {
+.icon {
   height: 5vh;
   /* margin: 0 auto; */
 }
 
-.Purchasable-checkmark {
+.checkmark {
   background-color: #444;
   position: absolute;
   top: 37%;
   left: 52%;
 }
 
-.Purchasable-label {
+.label {
   margin: 0;
 }
