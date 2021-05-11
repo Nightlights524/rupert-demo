@@ -1,7 +1,3 @@
-body {
-  background-color: #c6faf1;
-}
-
 .penguin {
   /* background-color:#c6faf1; */
   --penguin-skin: black;
@@ -15,7 +11,7 @@ body {
   height: 300px;
 }
 
-.penguin-top {
+.penguinTop {
   top: 10%;
   left: 25%;
   background: var(--penguin-skin, gray);
@@ -24,7 +20,7 @@ body {
   border-radius: 70% 70% 60% 60%;
 }
 
-.penguin-bottom {
+.penguinBottom {
   top: 40%;
   left: 23.5%;
   background: var(--penguin-skin, gray);
@@ -33,7 +29,7 @@ body {
   border-radius: 70% 70% 100% 100%;
 }
 
-.right-hand {
+.rightHand {
   position: relative;
   top: 0%;
   left: -6%;
@@ -45,7 +41,7 @@ body {
   /* z-index: -4; */
 }
 
-.left-hand {
+.leftHand {
   top: 0%;
   left: 75%;
   background: var(--penguin-skin, gray);
@@ -56,7 +52,7 @@ body {
   /* z-index: -1; */
 }
 
-.right-cheek {
+.rightCheek {
   top: 15%;
   left: 35%;
   background: var(--penguin-belly, white);
@@ -65,7 +61,7 @@ body {
   border-radius: 70% 70% 60% 60%;
 }
 
-.left-cheek {
+.leftCheek {
   top: 15%;
   left: 5%;
   background: var(--penguin-belly, white);
@@ -83,7 +79,7 @@ body {
   border-radius: 120% 120% 100% 100%;
 }
 
-.right-feet {
+.rightFoot {
   top: 85%;
   left: 60%;
   background: var(--penguin-beak, orange);
@@ -94,7 +90,7 @@ body {
   z-index: -2222;
 }
 
-.left-feet {
+.leftFoot {
   top: 85%;
   left: 25%;
   background: var(--penguin-beak, orange);
@@ -105,7 +101,7 @@ body {
   z-index: -2222;
 }
 
-.right-eye {
+.rightEye {
   top: 45%;
   left: 60%;
   background: black;
@@ -114,7 +110,7 @@ body {
   border-radius: 50%;
 }
 
-.left-eye {
+.leftEye {
   top: 45%;
   left: 25%;
   background: black;
@@ -132,7 +128,7 @@ body {
   border-radius: 50%;
 }
 
-.blush-right {
+.blushRight {
   top: 65%;
   left: 15%;
   background: pink;
@@ -141,7 +137,7 @@ body {
   border-radius: 50%;
 }
 
-.blush-left {
+.blushLeft {
   top: 65%;
   left: 70%;
   background: pink;
@@ -150,7 +146,7 @@ body {
   border-radius: 50%;
 }
 
-.beak-top {
+.beakTop {
   top: 60%;
   left: 40%;
   background: var(--penguin-beak, orange);
@@ -159,7 +155,7 @@ body {
   border-radius: 50%;
 }
 
-.beak-bottom {
+.beakBottom {
   top: 65%;
   left: 42%;
   background: var(--penguin-beak, orange);
@@ -172,33 +168,33 @@ body {
   position: absolute;
 }
 
-.penguin-container {
+.penguinContainer {
   /* background-color: bisque; */
   position: relative;
   /* position: absolute; */
 }
 
-.penguin-reset-position {
+.penguinResetPosition {
   animation: Penguin-reset-position 0.3s ease-out forwards;
 }
 
-.penguin-walk-left {
+.penguinWalkLeft {
   animation: Penguin-walk-left 0.2s ease-out forwards;
 }
 
-.penguin-walk-right {
+.penguinWalkRight {
   animation: Penguin-walk-right 0.2s ease-out forwards;
 }
 
-.penguin-jump {
+.penguinJump {
   animation: Penguin-jump 0.4s ease;
 }
 
-.penguin-spin {
+.penguinSpin {
   animation: Penguin-spin 0.5s;
 }
 
-.penguin-wave-left {
+.penguinWaveLeft {
   /* animation: Penguin-wave 2s linear; */
   animation-name: Penguin-wave-left; 
   animation-duration: 0.3s;
@@ -208,13 +204,161 @@ body {
   animation-timing-function: linear;
 }
 
-.penguin-wave-right {
+.penguinWaveRight {
   /* animation: Penguin-wave 2s linear; */
   animation-name: Penguin-wave-right; 
   animation-duration: 0.3s;
   animation-iteration-count: 2;
   /* transform-origin: 50% 50%; */
   animation-timing-function: linear;
+}
+
+.topHat {
+  top: -11%;
+  left: 25%;
+  width: 50%;
+  height: 40%;
+  margin: 0 auto;
+  /* border: 1px solid #000; */
+  /* background-color: red; */
+}
+
+.topHatTop {
+  position: relative;
+  background: black;
+  width: 70%;
+  height: 60%;
+  /* border-radius: 50%; */
+  /* border: 1px solid #000; */
+  background-color: #111;
+  border-radius: 10% 10% 0% 0%;
+  box-shadow: 0px 0px 1px;
+  margin: 0 auto;
+  z-index: 3;
+}
+
+.topHatMiddle {
+  position: relative;
+  top: -10%;
+  width: 70%;
+  height: 20%;
+  border-radius: 50%;
+  background-color: #111;
+  /* box-shadow: 0px 0px 1px; */
+  margin: 0 auto;
+  z-index: 4;
+}
+
+.topHatStripeBackground {
+  position: relative;
+  top: -20%;
+  width: 70%;
+  height: 15%;
+  background-color: #444;
+  /* background-color: green; */
+  box-shadow: 0px 0px 1px;
+  margin: 0 auto;
+  z-index: 2;
+}
+
+.topHatStripe {
+  position: relative;
+  top: -30%;
+  width: 70%;
+  height: 20%;
+  border-radius: 50%;
+  background-color: #444;
+  /* background-color: green; */
+  /* box-shadow: 0px 0px 1px; */
+  margin: 0 auto;
+  z-index: 2;
+}
+
+.topHatBrim {
+  position: relative;
+  top: -57%;
+  width: 100%;
+  height: 37%;
+  border-radius: 50%;
+  background-color: #111;
+  box-shadow: 0px 0px 1px;
+  /* z-index: 1; */
+}
+
+.monocle {
+  top: 16%;
+  left: 53%;
+  /* left: 102%; */
+  width: 25%;
+  height: 25%;
+  /* margin: 0 auto; */
+  /* border: 1px solid #000; */
+  /* background-color: green; */
+}
+
+.monocleLens{
+  position: relative;
+  top: 50%;
+  /* left: 52%; */
+  width: 35%;
+  height: 35%;
+  /* margin: 0 auto; */
+  border: 3px solid #000;
+  border-radius: 50%;
+  /* background-color: green; */
+}
+
+.monocleString {
+  /* top: 18%;
+  left: 52%;
+  width: 22%;
+  height: 22%;
+  margin: 0 auto;
+  border: 1px solid #000; */
+  /* .box { */
+  position: relative;
+  top: 6%;
+  left: -25%;
+  width: 55%; 
+  height: 100px;  
+  border: solid 2px #000;
+  border-color: #000 transparent transparent transparent;
+  border-radius: 50%/20px 0px 0 0;
+  transform: rotate(55deg);
+  /* } */
+}
+
+.lollipop {
+  position: relative;
+  top: 30%;
+  left: -90%;
+  width: 50%;
+  height: 80%;
+  margin: 0 auto;
+  transform: rotate(280deg);
+  /* z-index: -1 */
+}
+
+.lollipopTop {
+  position: relative;
+  width: 100%;
+  height: 37%;
+  border-radius: 50%;
+  background-color: #e50000;
+  box-shadow: 0px 0px 1px;
+  /* z-index: 1; */
+}
+
+.lollipopStick {
+  position: relative;
+  top: -3%;
+  width: 24%;
+  height: 63%;
+  border-radius: 2px;
+  background-color: #fff;
+  box-shadow: 0px 0px 1px;
+  margin: 0 auto;
+  z-index: -1;
 }
 
 @keyframes Penguin-reset-position {
@@ -265,33 +409,6 @@ body {
     transform: rotate(360deg);
   }
 }
-
-/* .right-hand {
-  top: 0%;
-  left: -5%;
-  background: var(--penguin-skin, gray);
-  width: 30%;
-  height: 60%;
-  border-radius: 30% 30% 120% 30%;
-  transform: rotate(45deg);
-  z-index: -1;
-} */
-
-/* .right-hand {
-  top: 5%;
-  left: 25%;
-  background: var(--penguin-skin, black);
-  width: 30%;
-  height: 60%;
-  border-radius: 30% 30% 120% 30%;
-  transform: rotate(130deg);
-  z-index: -1;
-  animation-duration: 3s;
-  animation-name: wave;
-  animation-iteration-count: infinite;
-  transform-origin:0% 0%;
-  animation-timing-function: linear;
-} */
 
 @keyframes Penguin-wave-left {
   33% { 
@@ -350,152 +467,3 @@ body {
       transform: rotate(130deg);
     }
   } */
-
-  .top-hat {
-    top: -11%;
-    left: 25%;
-    width: 50%;
-    height: 40%;
-    margin: 0 auto;
-    /* border: 1px solid #000; */
-    /* background-color: red; */
-  }
-
-  .top-hat-top {
-    position: relative;
-    background: black;
-    width: 70%;
-    height: 60%;
-    /* border-radius: 50%; */
-    /* border: 1px solid #000; */
-    background-color: #111;
-    border-radius: 10% 10% 0% 0%;
-    box-shadow: 0px 0px 1px;
-    margin: 0 auto;
-    z-index: 3;
-  }
-
-  .top-hat-middle {
-    position: relative;
-    top: -10%;
-    width: 70%;
-    height: 20%;
-    border-radius: 50%;
-    background-color: #111;
-    /* box-shadow: 0px 0px 1px; */
-    margin: 0 auto;
-    z-index: 4;
-  }
-
-  .top-hat-stripe-background {
-    position: relative;
-    top: -20%;
-    width: 70%;
-    height: 15%;
-    background-color: #444;
-    /* background-color: green; */
-    box-shadow: 0px 0px 1px;
-    margin: 0 auto;
-    z-index: 2;
-  }
-
-  .top-hat-stripe {
-    position: relative;
-    top: -30%;
-    width: 70%;
-    height: 20%;
-    border-radius: 50%;
-    background-color: #444;
-    /* background-color: green; */
-    /* box-shadow: 0px 0px 1px; */
-    margin: 0 auto;
-    z-index: 2;
-  }
-
-  .top-hat-brim {
-    position: relative;
-    top: -57%;
-    width: 100%;
-    height: 37%;
-    border-radius: 50%;
-    background-color: #111;
-    box-shadow: 0px 0px 1px;
-    /* z-index: 1; */
-  }
-  
-  .monocle {
-    top: 16%;
-    left: 53%;
-    /* left: 102%; */
-    width: 25%;
-    height: 25%;
-    /* margin: 0 auto; */
-    /* border: 1px solid #000; */
-    /* background-color: green; */
-  }
-  
-  .monocle-lens{
-    position: relative;
-    top: 50%;
-    /* left: 52%; */
-    width: 35%;
-    height: 35%;
-    /* margin: 0 auto; */
-    border: 3px solid #000;
-    border-radius: 50%;
-    /* background-color: green; */
-  }
-  
-  .monocle-string {
-    /* top: 18%;
-    left: 52%;
-    width: 22%;
-    height: 22%;
-    margin: 0 auto;
-    border: 1px solid #000; */
-    /* .box { */
-    position: relative;
-    top: 6%;
-    left: -25%;
-    width: 55%; 
-    height: 100px;  
-    border: solid 2px #000;
-    border-color: #000 transparent transparent transparent;
-    border-radius: 50%/20px 0px 0 0;
-    transform: rotate(55deg);
-    /* } */
-  }
-  
-  .lollipop {
-    position: relative;
-    top: 30%;
-    left: -90%;
-    width: 50%;
-    height: 80%;
-    margin: 0 auto;
-    transform: rotate(280deg);
-    /* z-index: -1 */
-  }
-
-  .lollipop-top {
-    position: relative;
-    width: 100%;
-    height: 37%;
-    border-radius: 50%;
-    background-color: #e50000;
-    box-shadow: 0px 0px 1px;
-    /* z-index: 1; */
-  }
-  
-  .lollipop-stick {
-    position: relative;
-    top: -3%;
-    width: 24%;
-    height: 63%;
-    border-radius: 2px;
-    background-color: #fff;
-    box-shadow: 0px 0px 1px;
-    margin: 0 auto;
-    z-index: -1;
-  }
-  
