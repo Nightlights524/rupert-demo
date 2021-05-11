@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.css';
+import './RupertApp.css';
 import Web3 from 'web3';
 import {checkForMetamask} from './Metamask.js';
 import {dappContractABI} from './dappContract_abi.js';
 import {tokenContractABI} from './tokenContract_abi.js';
-import Penguin from './Penguin.js';
-import Sidebar from './Sidebar.js';
-import Purchasable from './Purchasable.js';
+import Penguin from './Penguin/Penguin.js';
+import Sidebar from './Sidebar/Sidebar.js';
+import Purchasable from './Purchasable/Purchasable.js';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
@@ -25,7 +25,7 @@ const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddre
 const tokenApprovalAmount = 24000000;
 const tokenApprovalThreshold = 1000;
 
-class App extends React.Component {
+class RupertApp extends React.Component {
   constructor(props) {
     super(props);
     this.penguin = React.createRef();
@@ -254,4 +254,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default RupertApp;
