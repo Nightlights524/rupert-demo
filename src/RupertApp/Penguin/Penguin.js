@@ -1,8 +1,5 @@
 import React from 'react';
-import './Penguin.css';
-
 import * as styles from "./Penguin.module.css"
-
 import penguinChirp from './PenguinChirp.mp3';
 
 const keyBindings = {
@@ -49,13 +46,13 @@ class Penguin extends React.Component {
     this.penguinLeftHand.current.addEventListener('animationstart', this.handleAnimationStart);
     this.penguinLeftHand.current.addEventListener('animationend', () => {
       this.animationRunning = false;
-      this.penguinLeftHand.current.className = "left-hand";
+      this.penguinLeftHand.current.className = styles.leftHand;
     });
 
     this.penguinRightHand.current.addEventListener('animationstart', this.handleAnimationStart);
     this.penguinRightHand.current.addEventListener('animationend', () => {
       this.animationRunning = false;
-      this.penguinRightHand.current.className = "right-hand";
+      this.penguinRightHand.current.className = styles.rightHand;
     });
   }
 
@@ -67,13 +64,13 @@ class Penguin extends React.Component {
     this.penguinLeftHand.current.removeEventListener('animationstart', this.handleAnimationStart);
     this.penguinLeftHand.current.removeEventListener('animationend', () => {
       this.animationRunning = false;
-      this.penguinLeftHand.current.className = "left-hand";
+      this.penguinLeftHand.current.className = styles.leftHand;
     });
 
     this.penguinRightHand.current.removeEventListener('animationstart', this.handleAnimationStart);
     this.penguinRightHand.current.removeEventListener('animationend', () => {
       this.animationRunning = false;
-      this.penguinRightHand.current.className = "right-hand";
+      this.penguinRightHand.current.className = styles.rightHand;
     });
   }
 
@@ -136,7 +133,7 @@ class Penguin extends React.Component {
       };
     }, () => {
       this.animationRunning = false;
-      this.penguinContainer.current.className = "penguin-container";
+      this.penguinContainer.current.className = styles.penguinContainer;
     });
   }
 
@@ -153,17 +150,17 @@ class Penguin extends React.Component {
         this.state.offsetY === 0) {
           return;
     }
-    this.penguinContainer.current.classList.add("penguin-reset-position");
+    this.penguinContainer.current.classList.add(styles.penguinResetPosition);
   }
 
   walk = (pressedKey) => {
     if (!this.animationRunning && this.props.costs.walk === "OWNED") {
       this.setPreAnimationPosition();
       if(pressedKey === keyBindings.walkLeft) {
-        this.penguinContainer.current.classList.add("penguin-walk-left");
+        this.penguinContainer.current.classList.add(styles.penguinWalkLeft);
       }
       else if(pressedKey === keyBindings.walkRight) {
-        this.penguinContainer.current.classList.add("penguin-walk-right");
+        this.penguinContainer.current.classList.add(styles.penguinWalkRight);
       }
     }
   }
@@ -171,24 +168,24 @@ class Penguin extends React.Component {
   jump = () => {
     if (!this.animationRunning && this.props.costs.jump === "OWNED") {
       this.setPreAnimationPosition();
-      this.penguinContainer.current.classList.add("penguin-jump");
+      this.penguinContainer.current.classList.add(styles.penguinJump);
     }
   }
   
   spin = () => {
     if (!this.animationRunning && this.props.costs.spin === "OWNED") {
       this.setPreAnimationPosition();
-      this.penguinContainer.current.classList.add("penguin-spin");
+      this.penguinContainer.current.classList.add(styles.penguinSpin);
     }
   }
   
   wave = (pressedKey) => {
     if (!this.animationRunning && this.props.costs.wave === "OWNED") {
       if(pressedKey === keyBindings.waveLeftHand) {
-        this.penguinLeftHand.current.classList.add("penguin-wave-left");
+        this.penguinLeftHand.current.classList.add(styles.penguinWaveLeft);
       }
       else if(pressedKey === keyBindings.waveRightHand) {
-        this.penguinRightHand.current.classList.add("penguin-wave-right");
+        this.penguinRightHand.current.classList.add(styles.penguinWaveRight);
       }
     }
   }
@@ -224,53 +221,53 @@ class Penguin extends React.Component {
 
   render () {
     return (
-      <div className="penguin-container"
+      <div className={styles.penguinContainer}
         ref={this.penguinContainer}
         style={{left: `${this.state.offsetX}px`, top: `${this.state.offsetY}px`}}
         >
-        <div className="penguin">
-          <div className="penguin-bottom">
-            <div className="right-hand" ref={this.penguinRightHand}>
+        <div className={styles.penguin}>
+          <div className={styles.penguinBottom}>
+            <div className={styles.rightHand} ref={this.penguinRightHand}>
              {this.props.costs.lollipop === "OWNED" &&
               this.state.lollipop &&
-              <div className="lollipop" ref={this.lollipop}>
-                <div className="lollipop-top"></div>
-                <div className="lollipop-stick"></div>
+              <div className={styles.lollipop} ref={this.lollipop}>
+                <div className={styles.lollipopTop}></div>
+                <div className={styles.lollipopStick}></div>
               </div>}
             </div>
-            <div className="left-hand" ref={this.penguinLeftHand}></div>
-            <div className="right-feet"></div>
-            <div className="left-feet"></div>
+            <div className={styles.leftHand} ref={this.penguinLeftHand}></div>
+            <div className={styles.rightFoot}></div>
+            <div className={styles.leftFoot}></div>
           </div>
-          <div className="penguin-top">
-            <div className="right-cheek"></div>
-            <div className="left-cheek"></div>
-            <div className="belly"></div>
-            <div className="right-eye">
-              <div className="sparkle"></div>
+          <div className={styles.penguinTop}>
+            <div className={styles.rightCheek}></div>
+            <div className={styles.leftCheek}></div>
+            <div className={styles.belly}></div>
+            <div className={styles.rightEye}>
+              <div className={styles.sparkle}></div>
             </div>
-            <div className="left-eye">
-              <div className="sparkle"></div>
+            <div className={styles.leftEye}>
+              <div className={styles.sparkle}></div>
             </div>
-            <div className="blush-right"></div>
-            <div className="blush-left"></div>
-            <div className="beak-top"></div>
-            <div className="beak-bottom"></div>
+            <div className={styles.blushRight}></div>
+            <div className={styles.blushLeft}></div>
+            <div className={styles.beakTop}></div>
+            <div className={styles.beakBottom}></div>
           </div>
          {this.props.costs.topHat === "OWNED" &&
           this.state.topHat &&
-          <div className="top-hat" ref={this.topHat}>
-            <div className="top-hat-top"></div>
-            <div className="top-hat-middle"></div>
-            <div className="top-hat-stripe-background"></div>
-            <div className="top-hat-stripe"></div>
-            <div className="top-hat-brim"></div>
+          <div className={styles.topHat} ref={this.topHat}>
+            <div className={styles.topHatTop}></div>
+            <div className={styles.topHatMiddle}></div>
+            <div className={styles.topHatStripeBackground}></div>
+            <div className={styles.topHatStripe}></div>
+            <div className={styles.topHatBrim}></div>
           </div>}
          {this.props.costs.monocle === "OWNED" &&
           this.state.monocle &&
-          <div className="monocle" ref={this.monocle}>
-            <div className="monocle-lens"></div>
-            <div className="monocle-string"></div>
+          <div className={styles.monocle} ref={this.monocle}>
+            <div className={styles.monocleLens}></div>
+            <div className={styles.monocleString}></div>
           </div>}
         </div>
         <audio src={penguinChirp} ref={this.penguinChirp}>
