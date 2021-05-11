@@ -10,10 +10,16 @@ import Purchasable from './Purchasable.js';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
 
-const dappContractAddress = "0x467fbFc206697a5A2c4c81c4dAE6e13c26297ac1";
+// GANACHE BSC
+// const dappContractAddress = "0xf65Bc13bE010d7CE5e9EEB18051e4C2f9354000f";
+// ROPSTEN
+const dappContractAddress = "0x26a1f2ba3bb1e96266008Fc95CB5ec162c9CF2E1";
 const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress);
 
-const tokenContractAddress = "0x745De1d08F137A4B3dfC60b7ac811ce2342b56CE";
+// GANACHE BSC
+// const tokenContractAddress = "0xEEEd6F31e8EB946069D8DfB7FF211795fB2cE3F6";
+// ROPSTEN
+const tokenContractAddress = "0xdE326908798A57a7E8a5e86E6354dDb281F79484";
 const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
 
 const tokenApprovalAmount = 24000000;
