@@ -9,6 +9,7 @@
   /* margin-top: 5%; */
   width: 300px;
   height: 300px;
+  z-index: 0;
 }
 
 .penguinTop {
@@ -87,7 +88,7 @@
   height: 30%;
   border-radius: 50% 50% 50% 50%;
   transform: rotate(-80deg);
-  z-index: -2222;
+  z-index: -1;
 }
 
 .leftFoot {
@@ -98,7 +99,7 @@
   height: 30%;
   border-radius: 50% 50% 50% 50%;
   transform: rotate(80deg);
-  z-index: -2222;
+  z-index: -1;
 }
 
 .rightEye {

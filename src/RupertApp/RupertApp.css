@@ -41,10 +41,10 @@ button {
   outline: none;
 }
 
-.button-utility:active {
+/* .button-utility:active { */
   /* outline: none; */
   /* border: 2px solid green; */
-}
+/* } */
 
 /* .hidden,
 [hidden] {
