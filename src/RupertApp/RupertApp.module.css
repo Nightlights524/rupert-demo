@@ -18,6 +18,10 @@
   padding: 0px 10px;
 }
 
+.header p {
+  margin: 0;
+}
+
 .appMain {
   display: flex;
   flex-direction: row;

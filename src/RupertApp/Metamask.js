@@ -1,11 +1,11 @@
-import Web3 from 'web3';
+// import Web3 from 'web3';
 
-const checkForMetamask = () => {
-  window.addEventListener('load', async function() {
+const checkForMetamask = async () => {
+  // window.addEventListener('load', async function() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     // Modern DApp Browsers
     if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
+      window.web3 = new window.Web3(window.ethereum);
       try { 
         // window.ethereum.enable().then(function() {
         //     // User has allowed account access to DApp...
@@ -23,7 +23,7 @@ const checkForMetamask = () => {
     }
     // Legacy DApp Browsers
     else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
+      window.web3 = new window.Web3(window.web3.currentProvider);
       // alert("Web3 Provider set to Mist/Metamask");
     }
     // Non-DApp Browsers
@@ -31,7 +31,7 @@ const checkForMetamask = () => {
       // Handle the case where the user doesn't have web3.
       alert("Please install Metamask in order to use this app!");
     }
-  });
+  // });
 }
 
 export {checkForMetamask};

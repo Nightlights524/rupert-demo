@@ -1,6 +1,5 @@
 import React from 'react';
 import * as styles from "./RupertApp.module.css"
-import Web3 from 'web3';
 import {checkForMetamask} from './Metamask.js';
 import {dappContractABI} from './dappContract_abi.js';
 import {tokenContractABI} from './tokenContract_abi.js';
@@ -8,7 +7,7 @@ import Penguin from './Penguin/Penguin.js';
 import Sidebar from './Sidebar/Sidebar.js';
 import Purchasable from './Purchasable/Purchasable.js';
 
-const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
+const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
 
 // GANACHE BSC
 // const dappContractAddress = "0xf65Bc13bE010d7CE5e9EEB18051e4C2f9354000f";
@@ -47,9 +46,13 @@ class RupertApp extends React.Component {
   }
 
   componentDidMount() {
+    checkForMetamask();
+
     this.metamaskInterval = setInterval(async () => {
       // Check if account has changed
       try {
+        console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");  
+
         const accounts = await web3.eth.getAccounts();
         if (accounts[0] !== this.state.userAccount) {
           this.setState({userAccount: accounts[0]});
@@ -62,7 +65,7 @@ class RupertApp extends React.Component {
       }
     }, 1000);
 
-    checkForMetamask();
+    // checkForMetamask();
   }
 
   componentWillUnmount() {
