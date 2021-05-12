@@ -1,3 +1,4 @@
+import React from 'react';
 import * as styles from "./Purchasable.module.css"
 import logo from './logo.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
