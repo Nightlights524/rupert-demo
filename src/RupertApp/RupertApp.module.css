@@ -1,0 +1,74 @@
+.app {
+  text-align: center;
+  background-color: #c6faf1;
+}
+
+.header {
+  background-color: #282c34;
+  /* min-height: 10vh; */
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* justify-content: center; */
+  /* font-size: calc(10px + 2vmin); */
+  font-size: 1.2rem;
+  color: white;
+  padding: 0px 10px;
+}
+
+.appMain {
+  display: flex;
+  flex-direction: row;
+  /* text-align: center; */
+}
+
+.title,
+.subtitle {
+  margin: 0;
+}
+
+.utilityButton {
+  position: relative;
+  top: 2px;
+  margin-left: 8px;
+  padding: 4px 6px 2px 6px;
+  /* border: 4px inset; */
+  /* border-width: 3px; */
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.05rem;
+  overflow: hidden;
+  /* outline-style: double; */
+  cursor: pointer;
+}
+
+.utilityButton:focus {
+  background-color: #ddd;
+  /* text-decoration: underline; */
+  /* border: 2px solid blue; */
+}
+
+.utilityButton:hover {
+  background-color: #ddd;
+  outline: none;
+}
+
+.playArea {
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+}
+
+.contractInteraction {
+  /* width: 90vw; */
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  /* text-align: center; */
+}

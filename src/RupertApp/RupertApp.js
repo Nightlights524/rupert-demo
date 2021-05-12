@@ -1,5 +1,5 @@
 import React from 'react';
-import './RupertApp.css';
+import * as styles from "./RupertApp.module.css"
 import Web3 from 'web3';
 import {checkForMetamask} from './Metamask.js';
 import {dappContractABI} from './dappContract_abi.js';
@@ -158,16 +158,16 @@ class RupertApp extends React.Component {
   
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className={styles.app}>
+        <header className={styles.header}>
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
-          <div id="buy" className="contractInteraction">
+          <div id="buy" className={styles.contractInteraction}>
               <p>"Buy" 10,000 PenguinCoins</p>
-              <button className="button-utility" onClick={this.buyTokens}>BUY</button>
+              <button className={styles.utilityButton} onClick={this.buyTokens}>BUY</button>
           </div>
           <p>{`Account: ${this.state.userAccount}`}</p>
         </header>
-        <main>
+        <main className={styles.appMain}>
           <Sidebar>
             <Purchasable
               label="Walk"
@@ -234,16 +234,16 @@ class RupertApp extends React.Component {
               onClickOwned={() => {this.penguin.current.toggleAccessory("L")}}
             />
           </Sidebar>
-          <div className="App-playArea">
-            <div className="App-playArea-instructions">
-              <h1>Hi, I'm Steve!</h1>
+          <div className={styles.playArea}>
+            <div /*className="App-playArea-instructions"*/>
+              <h1 className={styles.title}>Hi, I'm Steve!</h1>
               {!this.state.approved &&
-                <div className="contractInteraction">
-                  <h2>Approve PenguinCoin to get started</h2>
-                  <button className="button-utility" onClick={this.approveToken}>APPROVE</button>
+                <div className={styles.contractInteraction}>
+                  <h2 className={styles.subtitle}>Approve PenguinCoin to get started</h2>
+                  <button className={styles.utilityButton} onClick={this.approveToken}>APPROVE</button>
                 </div>
               }
-              {this.state.approved && <h2>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
+              {this.state.approved && <h2 className={styles.subtitle}>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
             </div>
             <Penguin ref={this.penguin} costs={this.state.costs} accessories={this.state.accessories}/>
             <p>Penguin character design by FreeCodeCamp.com</p>
