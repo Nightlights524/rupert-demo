@@ -1,0 +1,56 @@
+.button {
+  /* position: relative; */
+  /* top: 2px; */
+  margin-left: 8px;
+  padding: 6px 8px 3px 8px;
+  /* border-width: 3px; */
+  border: 2px solid #000;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.05rem;
+  overflow: hidden;
+  /* outline-style: double; */
+  cursor: pointer;
+  /* border: none; */
+  background-color: #fff;
+  /* animation: glow 1500ms linear infinite; */
+  transition: 0.2s;
+}
+
+.button:focus {
+  /* background-color: #eee; */
+  /* box-shadow: 0 0 20px #c6faf1; */
+  animation: none;
+  /* text-decoration: underline; */
+  /* border: 2px solid blue; */
+}
+
+.button:hover {
+  background-color: #eee;
+  /* opacity: 0.7; */
+  outline: none;
+  animation: none;
+  box-shadow: 0 0 10px #c6faf1;
+}
+
+.button:active {
+  background-color: #ddd;
+}
+
+.glow {
+  animation: glow 1500ms linear infinite;
+}
+
+@keyframes glow {
+  0% {
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+  }
+  50% {
+    /* background-color: #c6faf1; */
+    color: #135349;
+    box-shadow: 0 0 20px #80d1c4;
+  }
+  100% {
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+  }
+}

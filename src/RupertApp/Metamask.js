@@ -12,6 +12,7 @@ const checkForMetamask = async () => {
         //     alert("Web3 Provider set to Mist/Metamask");
         // });
         await window.ethereum.request({ method: 'eth_requestAccounts' });
+        return true;
         // User has allowed account access to DApp...
         // alert("Web3 Provider set to Mist/Metamask");
       } 
@@ -24,12 +25,14 @@ const checkForMetamask = async () => {
     // Legacy DApp Browsers
     else if (window.web3) {
       window.web3 = new window.Web3(window.web3.currentProvider);
+      return true;
       // alert("Web3 Provider set to Mist/Metamask");
     }
     // Non-DApp Browsers
     else {
       // Handle the case where the user doesn't have web3.
-      alert("Please install Metamask in order to use this app!");
+      alert("Please install Metamask to use this app!");
+      return false;
     }
   // });
 }

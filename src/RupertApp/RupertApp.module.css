@@ -40,32 +40,6 @@
   margin: 0;
 }
 
-.utilityButton {
-  position: relative;
-  top: 2px;
-  margin-left: 8px;
-  padding: 4px 6px 2px 6px;
-  /* border: 4px inset; */
-  /* border-width: 3px; */
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: 1.05rem;
-  overflow: hidden;
-  /* outline-style: double; */
-  cursor: pointer;
-}
-
-.utilityButton:focus {
-  background-color: #ddd;
-  /* text-decoration: underline; */
-  /* border: 2px solid blue; */
-}
-
-.utilityButton:hover {
-  background-color: #ddd;
-  outline: none;
-}
-
 .playArea {
   width: 90vw;
   display: flex;
@@ -73,6 +47,10 @@
   justify-content: center;
   align-items: center;
   /* text-align: center; */
+}
+
+.playArea p {
+  margin: 1rem 0 0 0;
 }
 
 .contractInteraction {
@@ -83,3 +61,7 @@
   align-items: center;
   /* text-align: center; */
 }
+
+/* .diagonalArrow { */
+  /* transform: rotate(45deg); */
+/* } */
