@@ -8,32 +8,17 @@ import Sidebar from './Sidebar/Sidebar.js';
 import Purchasable from './Purchasable/Purchasable.js';
 import Button from './Button/Button.js';
 
-// const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-
-// // GANACHE BSC
-// // const dappContractAddress = "0xf65Bc13bE010d7CE5e9EEB18051e4C2f9354000f";
-// // ROPSTEN
-// const dappContractAddress = "0x26a1f2ba3bb1e96266008Fc95CB5ec162c9CF2E1";
-// const dappContract = new web3.eth.Contract(dappContractABI, dappContractAddress);
-
-// // GANACHE BSC
-// // const tokenContractAddress = "0xEEEd6F31e8EB946069D8DfB7FF211795fB2cE3F6";
-// // ROPSTEN
-// const tokenContractAddress = "0xdE326908798A57a7E8a5e86E6354dDb281F79484";
-// const tokenContract = new web3.eth.Contract(tokenContractABI, tokenContractAddress);
-
-// const tokenApprovalAmount = 24000000;
-// const tokenApprovalThreshold = 1000;
-
 class RupertApp extends React.Component {
   constructor(props) {
     super(props);
     this.penguin = React.createRef();
     this.web3 = null;
     this.chainID = 3;
-    this.dappContractAddress = "0x26a1f2ba3bb1e96266008Fc95CB5ec162c9CF2E1";
+    // this.dappContractAddress = "0xf65Bc13bE010d7CE5e9EEB18051e4C2f9354000f"; // GANACHE BSC
+    this.dappContractAddress = "0x26a1f2ba3bb1e96266008Fc95CB5ec162c9CF2E1"; // ROPSTEN
     this.dappContract = null;
-    this.tokenContractAddress = "0xdE326908798A57a7E8a5e86E6354dDb281F79484";
+    // this.tokenContractAddress = "0xEEEd6F31e8EB946069D8DfB7FF211795fB2cE3F6"; // GANACHE BSC
+    this.tokenContractAddress = "0xdE326908798A57a7E8a5e86E6354dDb281F79484"; // ROPSTEN
     this.tokenContract = null;
     this.tokenApprovalAmount = 24000000;
     this.tokenApprovalThreshold = 1000;
@@ -56,26 +41,14 @@ class RupertApp extends React.Component {
   }
 
   // componentDidMount() {
-    // checkForMetamask();
-
-    // this.metamaskInterval = setInterval(async () => {
-    //   // Check if account has changed
-    //   try {
-    //     console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");  
-
-    //     const accounts = await web3.eth.getAccounts();
-    //     if (accounts[0] !== this.state.userAccount) {
-    //       this.setState({userAccount: accounts[0]});
-    //     }
-    //     this.updateTokenBalance();
-    //     this.updateCosts();
-    //     this.updateApproval();
-    //   } catch (error) {
-    //     alert(error);
-    //   }
-    // }, 1000);
-
-    // checkForMetamask();
+  //   setTimeout(async () => {
+  //     try {
+  //       this.connectToWallet();
+  //     } 
+  //     catch (error) {
+  //       console.error(error);
+  //     }
+  //   }, 5000);
   // }
 
   componentWillUnmount() {
@@ -83,34 +56,38 @@ class RupertApp extends React.Component {
   }
 
   connectToWallet = async () => {
-    // First initialize hte web3 object
-    this.web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-
-    if (await checkForMetamask()) {
-      if (await this.checkForCorrectNetwork()) {
-        this.startApp();
+    try {
+      // First initialize the web3 object only if it doesn't exist yet
+      if (!this.web3) {
+        this.web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
       }
+      if (await checkForMetamask()) {
+        if (await this.checkForCorrectNetwork()) {
+          this.startApp();
+        }
+      }
+    } 
+    catch (error) {
+      console.error(error);
     }
   }
 
   checkForCorrectNetwork = async () => {
     // console.log("CHECKING FOR CORRECT NETWORK");
-    // const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-    // const chainID = await web3.eth.getChainId();
-    const chainID = await this.web3.eth.getChainId();
-    if (chainID !== this.chainID) {
-      alert('Please switch Metamask to the "Ropsten" Ethereum test network.');
-      return false;
-    };
-    return true;
+    try {
+      const chainID = await this.web3.eth.getChainId();
+      if (chainID !== this.chainID) {
+        alert('Please switch Metamask to the "Ropsten" Ethereum test network.');
+        return false;
+      };
+      return true;
+    } 
+    catch (error) {
+      console.error(error);
+    }
   }
 
   startApp = () => {
-    // const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-    // this.web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-
-    // this.dappContract = new web3.eth.Contract(dappContractABI, this.dappContractAddress);
-    // this.tokenContract = new web3.eth.Contract(tokenContractABI, this.tokenContractAddress);
     this.dappContract = new this.web3.eth.Contract(dappContractABI, this.dappContractAddress);
     this.tokenContract = new this.web3.eth.Contract(tokenContractABI, this.tokenContractAddress);
 
@@ -121,10 +98,7 @@ class RupertApp extends React.Component {
         if (!connected) {
           return;
         } 
-
         // console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");
-
-        // const accounts = await web3.eth.getAccounts();
         const accounts = await this.web3.eth.getAccounts();
         if (accounts[0] !== this.state.userAccount) {
           this.setState({userAccount: accounts[0]}, () => {
@@ -140,11 +114,11 @@ class RupertApp extends React.Component {
         if (!this.state.walletConnected) {
           this.setState({walletConnected: true});
         }
-      } catch (error) {
+      } 
+      catch (error) {
         console.error(error);
       }
     }, 1000);
-
     // this.setState({walletConnected: true});
   }
 
@@ -157,7 +131,8 @@ class RupertApp extends React.Component {
       // if (!this.state.walletConnected) {
       //   this.setState({walletConnected: true});
       // }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }
@@ -172,10 +147,9 @@ class RupertApp extends React.Component {
         const purchasable = await this.dappContract.methods.purchasables(key).call();
         costs[key] = isOwned ? "OWNED" : purchasable.tokenCost;
       }
-      
       this.setState({costs});
-      
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }
@@ -187,7 +161,8 @@ class RupertApp extends React.Component {
       if (approved !== this.state.contractApproved) {
         this.setState({contractApproved: approved});
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }
@@ -196,7 +171,8 @@ class RupertApp extends React.Component {
   //   try {
   //     const allowance = await tokenContract.methods.allowance(this.state.userAccount, dappContractAddress).call();
   //     return parseInt(allowance) >= tokenApprovalThreshold;
-  //   } catch (error) {
+  //   } 
+  //   catch (error) {
   //     console.error(error);
   //   }
   // }
@@ -204,7 +180,8 @@ class RupertApp extends React.Component {
   approveToken = async () => {
     try {
       await this.tokenContract.methods.approve(this.dappContractAddress, this.tokenApprovalAmount).send({from: this.state.userAccount});
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
     document.activeElement.blur();
@@ -213,7 +190,8 @@ class RupertApp extends React.Component {
   buyTokens = async () => {
     try {
       await this.tokenContract.methods.buyTokens(10000).send({from: this.state.userAccount});
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
     document.activeElement.blur();
@@ -233,7 +211,8 @@ class RupertApp extends React.Component {
       }
       const transaction = await this.dappContract.methods.purchase(itemName).send({from: this.state.userAccount});
       console.log(transaction);
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error);
     }
   }

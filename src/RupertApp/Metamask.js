@@ -5,23 +5,19 @@ const checkForMetamask = async () => {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     // Modern DApp Browsers
     if (window.ethereum) {
-      return true;
       // window.web3 = new window.Web3(window.ethereum);
-      // try { 
-      //   // window.ethereum.enable().then(function() {
-      //   //     // User has allowed account access to DApp...
-      //   //     alert("Web3 Provider set to Mist/Metamask");
-      //   // });
-      //   await window.ethereum.request({ method: 'eth_requestAccounts' });
-      //   return true;
+      try { 
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+        return true;
       //   // User has allowed account access to DApp...
       //   // alert("Web3 Provider set to Mist/Metamask");
-      // } 
-      // catch(e) {
-      //   // User has denied account access to DApp...
-      //   alert("User has denied account access to DApp!");
-      //   console.error(e);
-      // }
+      } 
+      catch(error) {
+        // User has denied account access to DApp...
+        // alert("User has denied account access to DApp!");
+        console.error(error);
+        return false;
+      }
     }
     // Legacy DApp Browsers
     else if (window.web3) {
