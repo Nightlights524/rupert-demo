@@ -83,12 +83,21 @@ class RupertApp extends React.Component {
 
   connectToWallet = async () => {
     if (await checkForMetamask()) {
-      const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-      const chainID = await web3.eth.getChainId();
-      alert(chainID === this.chainID);
-
-      this.startApp();
+      if (await this.checkForCorrectNetwork()) {
+        this.startApp();
+      }
     }
+  }
+
+  checkForCorrectNetwork = async () => {
+    // console.log("CHECKING FOR CORRECT NETWORK");
+    const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
+    const chainID = await web3.eth.getChainId();
+    if (chainID !== this.chainID) {
+      alert('Please switch Metamask to the "Ropsten" Ethereum test network.');
+      return false;
+    };
+    return true;
   }
 
   startApp = () => {
@@ -100,7 +109,12 @@ class RupertApp extends React.Component {
     this.metamaskInterval = setInterval(async () => {
       // Check if account has changed
       try {
-        console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");  
+        const connected = await this.checkForCorrectNetwork();
+        if (!connected) {
+          return;
+        } 
+
+        // console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");
 
         const accounts = await web3.eth.getAccounts();
         if (accounts[0] !== this.state.userAccount) {
@@ -110,15 +124,15 @@ class RupertApp extends React.Component {
             // }
           });
         }
-        this.updateTokenBalance();
-        this.updateCosts();
-        this.updateApproval();
+        await this.updateTokenBalance();
+        await this.updateCosts();
+        await this.updateApproval();
 
-        // if (!this.state.walletConnected) {
-        //   this.setState({walletConnected: true});
-        // }
+        if (!this.state.walletConnected) {
+          this.setState({walletConnected: true});
+        }
       } catch (error) {
-        alert(error);
+        console.error(error);
       }
     }, 1000);
 
@@ -131,11 +145,11 @@ class RupertApp extends React.Component {
       if (tokenBalance !== this.state.tokenBalance) {
         this.setState({tokenBalance});
       }
-      if (!this.state.walletConnected) {
-        this.setState({walletConnected: true});
-      }
+      // if (!this.state.walletConnected) {
+      //   this.setState({walletConnected: true});
+      // }
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
   }
 
@@ -153,7 +167,7 @@ class RupertApp extends React.Component {
       this.setState({costs});
       
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
   }
   
