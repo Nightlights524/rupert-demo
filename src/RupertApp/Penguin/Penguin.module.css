@@ -1,3 +1,8 @@
+.penguinContainer {
+  position: relative;
+  box-sizing: content-box;
+}
+
 .penguin {
   /* background-color:#c6faf1; */
   --penguin-skin: black;
@@ -10,6 +15,10 @@
   width: 300px;
   height: 300px;
   z-index: 0;
+}
+
+.penguin * {
+  position: absolute;
 }
 
 .penguinTop {
@@ -163,16 +172,6 @@
   width: 16%;
   height: 10%;
   border-radius: 50%;
-}
-
-.penguin * {
-  position: absolute;
-}
-
-.penguinContainer {
-  /* background-color: bisque; */
-  position: relative;
-  /* position: absolute; */
 }
 
 .penguinResetPosition {

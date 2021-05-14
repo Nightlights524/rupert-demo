@@ -29,6 +29,7 @@ class RupertApp extends React.Component {
   constructor(props) {
     super(props);
     this.penguin = React.createRef();
+    this.web3 = null;
     this.chainID = 3;
     this.dappContractAddress = "0x26a1f2ba3bb1e96266008Fc95CB5ec162c9CF2E1";
     this.dappContract = null;
@@ -82,6 +83,9 @@ class RupertApp extends React.Component {
   }
 
   connectToWallet = async () => {
+    // First initialize hte web3 object
+    this.web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
+
     if (await checkForMetamask()) {
       if (await this.checkForCorrectNetwork()) {
         this.startApp();
@@ -91,8 +95,9 @@ class RupertApp extends React.Component {
 
   checkForCorrectNetwork = async () => {
     // console.log("CHECKING FOR CORRECT NETWORK");
-    const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
-    const chainID = await web3.eth.getChainId();
+    // const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
+    // const chainID = await web3.eth.getChainId();
+    const chainID = await this.web3.eth.getChainId();
     if (chainID !== this.chainID) {
       alert('Please switch Metamask to the "Ropsten" Ethereum test network.');
       return false;
@@ -101,10 +106,13 @@ class RupertApp extends React.Component {
   }
 
   startApp = () => {
-    const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
+    // const web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
+    // this.web3 = new window.Web3(window.Web3.givenProvider || "ws://localhost:8545");
 
-    this.dappContract = new web3.eth.Contract(dappContractABI, this.dappContractAddress);
-    this.tokenContract = new web3.eth.Contract(tokenContractABI, this.tokenContractAddress);
+    // this.dappContract = new web3.eth.Contract(dappContractABI, this.dappContractAddress);
+    // this.tokenContract = new web3.eth.Contract(tokenContractABI, this.tokenContractAddress);
+    this.dappContract = new this.web3.eth.Contract(dappContractABI, this.dappContractAddress);
+    this.tokenContract = new this.web3.eth.Contract(tokenContractABI, this.tokenContractAddress);
 
     this.metamaskInterval = setInterval(async () => {
       // Check if account has changed
@@ -116,7 +124,8 @@ class RupertApp extends React.Component {
 
         // console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");
 
-        const accounts = await web3.eth.getAccounts();
+        // const accounts = await web3.eth.getAccounts();
+        const accounts = await this.web3.eth.getAccounts();
         if (accounts[0] !== this.state.userAccount) {
           this.setState({userAccount: accounts[0]}, () => {
             // if (!this.state.walletConnected) {
