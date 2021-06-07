@@ -7,8 +7,7 @@
   background-color: #282c34;
   color: #fff;
   border: none;
-  font-size: 1rem;
-  /* font-weight: bold; */
+  font-size: 0.9em;
 }
 
 .purchasable:hover {
@@ -21,15 +20,16 @@
 }
 
 .icon {
-  height: 5vh;
+  height: 32px;
   margin: 0;
 }
 
 .checkmark {
-  background-color: #444;
   position: absolute;
-  top: 37%;
-  left: 52%;
+  top: 42%;
+  left: 62%;
+  stroke: #282c34;
+  stroke-width: 15px;
 }
 
 .label {

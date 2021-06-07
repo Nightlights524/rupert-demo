@@ -4,16 +4,15 @@
 }
 
 .penguin {
-  /* background-color:#c6faf1; */
   --penguin-skin: black;
   --penguin-belly: white;
   --penguin-beak: orange;
   position: relative;
-  /* margin: auto; */
   display: block;
-  /* margin-top: 5%; */
-  width: 300px;
-  height: 300px;
+  width: 100vw;
+  height: 100vw;
+  max-width: 300px;
+  max-height: 300px;
   z-index: 0;
 }
 
@@ -48,7 +47,6 @@
   height: 60%;
   border-radius: 30% 30% 120% 30%;
   transform: rotate(45deg);
-  /* z-index: -4; */
 }
 
 .leftHand {
@@ -59,7 +57,6 @@
   height: 60%;
   border-radius: 30% 30% 30% 120%;
   transform: rotate(-45deg);
-  /* z-index: -1; */
 }
 
 .rightCheek {
@@ -195,21 +192,16 @@
 }
 
 .penguinWaveLeft {
-  /* animation: Penguin-wave 2s linear; */
-  animation-name: Penguin-wave-left; 
+  animation-name: Penguin-wave-left;
   animation-duration: 0.3s;
   animation-iteration-count: 2;
-  /* transform-origin: 50% 40%; */
-  /* transform-origin: bottom right;  */
   animation-timing-function: linear;
 }
 
 .penguinWaveRight {
-  /* animation: Penguin-wave 2s linear; */
-  animation-name: Penguin-wave-right; 
+  animation-name: Penguin-wave-right;
   animation-duration: 0.3s;
   animation-iteration-count: 2;
-  /* transform-origin: 50% 50%; */
   animation-timing-function: linear;
 }
 
@@ -219,8 +211,6 @@
   width: 50%;
   height: 40%;
   margin: 0 auto;
-  /* border: 1px solid #000; */
-  /* background-color: red; */
 }
 
 .topHatTop {
@@ -228,8 +218,6 @@
   background: black;
   width: 70%;
   height: 60%;
-  /* border-radius: 50%; */
-  /* border: 1px solid #000; */
   background-color: #111;
   border-radius: 10% 10% 0% 0%;
   box-shadow: 0px 0px 1px;
@@ -244,7 +232,6 @@
   height: 20%;
   border-radius: 50%;
   background-color: #111;
-  /* box-shadow: 0px 0px 1px; */
   margin: 0 auto;
   z-index: 4;
 }
@@ -255,7 +242,6 @@
   width: 70%;
   height: 15%;
   background-color: #444;
-  /* background-color: green; */
   box-shadow: 0px 0px 1px;
   margin: 0 auto;
   z-index: 2;
@@ -268,8 +254,6 @@
   height: 20%;
   border-radius: 50%;
   background-color: #444;
-  /* background-color: green; */
-  /* box-shadow: 0px 0px 1px; */
   margin: 0 auto;
   z-index: 2;
 }
@@ -282,50 +266,34 @@
   border-radius: 50%;
   background-color: #111;
   box-shadow: 0px 0px 1px;
-  /* z-index: 1; */
 }
 
 .monocle {
   top: 16%;
   left: 53%;
-  /* left: 102%; */
   width: 25%;
   height: 25%;
-  /* margin: 0 auto; */
-  /* border: 1px solid #000; */
-  /* background-color: green; */
 }
 
-.monocleLens{
+.monocleLens {
   position: relative;
   top: 50%;
-  /* left: 52%; */
   width: 35%;
   height: 35%;
-  /* margin: 0 auto; */
   border: 3px solid #000;
   border-radius: 50%;
-  /* background-color: green; */
 }
 
 .monocleString {
-  /* top: 18%;
-  left: 52%;
-  width: 22%;
-  height: 22%;
-  margin: 0 auto;
-  border: 1px solid #000; */
-  /* .box { */
   position: relative;
   top: 6%;
   left: -25%;
-  width: 55%; 
-  height: 100px;  
+  width: 55%;
+  height: 100px;
   border: solid 2px #000;
   border-color: #000 transparent transparent transparent;
   border-radius: 50%/20px 0px 0 0;
   transform: rotate(55deg);
-  /* } */
 }
 
 .lollipop {
@@ -336,7 +304,6 @@
   height: 80%;
   margin: 0 auto;
   transform: rotate(280deg);
-  /* z-index: -1 */
 }
 
 .lollipopTop {
@@ -346,7 +313,6 @@
   border-radius: 50%;
   background-color: #e50000;
   box-shadow: 0px 0px 1px;
-  /* z-index: 1; */
 }
 
 .lollipopStick {
@@ -362,9 +328,6 @@
 }
 
 @keyframes Penguin-reset-position {
-  /* 0% {
-    transform: translateX(0px);
-  } */
   100% {
     top: 0px;
     left: 0px;
@@ -411,59 +374,17 @@
 }
 
 @keyframes Penguin-wave-left {
-  33% { 
+  33% {
     transform: rotate(-110deg);
     left: 135px;
     top: -20px;
   }
-
-  /* 50% {
-    transform: rotate(-110deg);
-    left: 135px;
-    top: -20px;
-  } */
-
-  /* 50% {
-    transform: rotate(-110deg);
-    left: 135px;
-    top: -20px;
-  } */
 }
 
 @keyframes Penguin-wave-right {
-  /* 25% { 
-    transform: rotate(110deg);
-    left: -20px;
-    top: -20px;
-  } */
-
   50% {
     transform: rotate(110deg);
     left: -20px;
     top: -20px;
   }
-
-  /* 50% {
-    transform: rotate(110deg);
-    left: -20px;
-    top: -20px;
-  } */
 }
-
-
-
-/* 
-@keyframes Penguin-wave-right {
-    25% {
-      transform: rotate(110deg);
-    }
-    50% {
-      transform: rotate(130deg);
-    }
-    75% {
-      transform: rotate(110deg);
-    }
-    80% {
-      transform: rotate(130deg);
-    }
-  } */

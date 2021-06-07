@@ -4,23 +4,18 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  font-size: 1.1rem;
 }
 
 .header {
   background-color: #282c34;
-  /* min-height: 10vh; */
-  /* height: 10vh; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* justify-content: center; */
-  /* font-size: calc(10px + 2vmin); */
-  font-size: 1.2rem;
   color: white;
-  padding: 0px 10px;
+  padding: 10px;
   min-height: 60px;
-  overflow-x: scroll;
 }
 
 .header p {
@@ -30,38 +25,108 @@
 .appMain {
   display: flex;
   flex-direction: row;
-  /* text-align: center; */
   flex-grow: 1;
   overflow: hidden;
+  position: relative;
 }
 
-.title,
+.instructions,
+.infoArea {
+  max-width: 80%;
+}
+
+.infoArea {
+  font-size: 0.8em;
+}
+
+.title {
+  font-size: 1.8em;
+  margin-bottom: 0.3em;
+}
+
 .subtitle {
-  margin: 0;
+  font-size: 1.3em;
+  margin: 0 auto 0.45em auto;
+}
+
+.approveButton {
+  position: relative;
+  top: 0.5em;
 }
 
 .playArea {
-  width: 90vw;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.playArea p {
+  margin: 0.5em 0 0 0;
+}
+
+.contractInteraction {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* text-align: center; */
 }
 
-.playArea p {
-  margin: 1rem 0 0 0;
+.controlsArea {
+  max-width: 96%;
 }
 
-.contractInteraction {
-  /* width: 90vw; */
+.touchControls {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* text-align: center; */
+  gap: 10px;
+  word-wrap: normal;
+  margin-bottom: 0.8em;
 }
 
-/* .diagonalArrow { */
-  /* transform: rotate(45deg); */
-/* } */
+.controlsGroup,
+.controlsGroupTextButtons,
+.toggleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 450px) {
+  .header {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .account {
+    order: -1;
+  }
+
+  .title {
+    font-size: 9vw;
+  }
+
+  .subtitle {
+    font-size: 6vw;
+  }
+
+  .controlsGroupTextButtons {
+    font-size: 80%;
+  }
+
+  .infoArea {
+    font-size: 4.5vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .toggleContainer {
+    display: none;
+  }
+}

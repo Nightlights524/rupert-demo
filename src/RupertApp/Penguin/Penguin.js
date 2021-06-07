@@ -39,7 +39,8 @@ class Penguin extends React.Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyPress);
+    document.addEventListener('keydown', (event) => this.handleKeyPress(event.key));
+    
     this.penguinContainer.current.addEventListener('animationstart', this.handleAnimationStart);
     this.penguinContainer.current.addEventListener('animationend', this.handleAnimationEnd);
 
@@ -57,7 +58,8 @@ class Penguin extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyPress);
+    document.removeEventListener('keydown', (event) => this.handleKeyPress(event.key));
+
     this.penguinContainer.current.removeEventListener('animationstart', this.handleAnimationStart);
     this.penguinContainer.current.removeEventListener('animationend', this.handleAnimationEnd);
 
@@ -79,14 +81,14 @@ class Penguin extends React.Component {
     this.preAnimationY = this.penguinContainer.current.getBoundingClientRect().y;
   }
 
-  handleKeyPress = (event) => {
+  handleKeyPress = (eventKey) => {
     if (this.animationRunning) {
       return;
     }
 
     this.setPreAnimationPosition();
 
-    const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
+    const key = eventKey.toUpperCase();
     switch (key) {
       case keyBindings.resetPosition:
         this.resetPosition();
@@ -192,7 +194,6 @@ class Penguin extends React.Component {
   
   speak = () => {
     if (!this.animationRunning && this.props.costs.speak === "OWNED") {
-      // this.penguinChirp.current.volume = 0.2;
       this.penguinChirp.current.play();
     }
   }
@@ -202,12 +203,21 @@ class Penguin extends React.Component {
 
     switch (pressedKey) {
       case keyBindings.topHat:
+        if (this.props.costs.topHat !== "OWNED") {
+          return;
+        }
         accessory = "topHat";
         break;
       case keyBindings.monocle:
+        if (this.props.costs.monocle !== "OWNED") {
+          return;
+        }
         accessory = "monocle";
         break;
       case keyBindings.lollipop:
+        if (this.props.costs.lollipop !== "OWNED") {
+          return;
+        }
         accessory = "lollipop";
         break;
       default:
@@ -217,6 +227,10 @@ class Penguin extends React.Component {
     this.setState((prevState, currentProps) => {
       return {[accessory]: !prevState[accessory]};
     });
+  }
+
+  accessoryOwned = (accessoryCost) => {
+    return accessoryCost === "OWNED";
   }
 
   render () {

@@ -59,33 +59,4 @@ const PenguinControls = {
   }
 }
 
-// handleKeyPress = (event) => {
-//   const key = event.key === "Shift" ? event.key : event.key.toUpperCase();
-//   switch (key) {
-//     case keyBindings.walkLeft:
-//     case keyBindings.walkRight:
-//       this.walk(key);
-//       break;
-//     case keyBindings.jump:
-//       this.jump();
-//       break;
-//     case keyBindings.spin:
-//       this.spin();
-//       break;
-//     case keyBindings.wave:
-//       this.wave();
-//       break;
-//     case keyBindings.speak:
-//       this.speak();
-//       break;
-//     case keyBindings.topHat:
-//     case keyBindings.monocle:
-//     case keyBindings.lollipop:
-//       this.toggleAccessory(key);
-//       break;
-//     default:
-//       break;
-//   }
-// }
-
 export default PenguinControls

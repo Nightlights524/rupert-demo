@@ -4,9 +4,14 @@ import {checkForMetamask} from './Metamask.js';
 import {dappContractABI} from './dappContract_abi.js';
 import {tokenContractABI} from './tokenContract_abi.js';
 import Penguin from './Penguin/Penguin.js';
+import Hamburger from './Hamburger/Hamburger.js';
 import Sidebar from './Sidebar/Sidebar.js';
 import Purchasable from './Purchasable/Purchasable.js';
 import Button from './Button/Button.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faArrowRight, faArrowUp, faSyncAlt } from '@fortawesome/free-solid-svg-icons'
+import Toggle from 'react-toggle'
+import "react-toggle/style.css"
 
 class RupertApp extends React.Component {
   constructor(props) {
@@ -22,11 +27,18 @@ class RupertApp extends React.Component {
     this.tokenContract = null;
     this.tokenApprovalAmount = 24000000;
     this.tokenApprovalThreshold = 1000;
+    this.tokenPurchaseAmount = 10000;
+    this.touchControlsMatchMedia = "(max-width: 768px)";
+    this.sidebarMatchMedia = "(max-width: 450px)";
     this.state = {
       userAccount: "(connecting wallet...)",
       tokenBalance: 0,
       walletConnected: false,
       contractApproved: false,
+      touchControlsEnabled: false,
+      touchControlsVisible: false,
+      sidebarOpen: false,
+      sidebarToggleEnabled: false,
       costs: {
         walk: null,
         jump: null,
@@ -40,19 +52,40 @@ class RupertApp extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   setTimeout(async () => {
-  //     try {
-  //       this.connectToWallet();
-  //     } 
-  //     catch (error) {
-  //       console.error(error);
-  //     }
-  //   }, 5000);
-  // }
+  componentDidMount() {
+    window.matchMedia(this.touchControlsMatchMedia).addEventListener('change', this.handleMobileMatchMedia);
+    window.matchMedia(this.sidebarMatchMedia).addEventListener('change', this.handleSidebarMatchMedia);
+    this.setState({
+      touchControlsVisible: window.matchMedia(this.touchControlsMatchMedia).matches,
+      sidebarOpen: !window.matchMedia(this.sidebarMatchMedia).matches,
+      sidebarToggleEnabled: window.matchMedia(this.sidebarMatchMedia).matches,
+    });
+  }
 
   componentWillUnmount() {
+    window.matchMedia(this.touchControlsMatchMedia).removeEventListener('change', this.handleMobileMatchMedia);
+    window.matchMedia(this.sidebarMatchMedia).removeEventListener('change', this.handleSidebarMatchMedia);
     clearInterval(this.metamaskInterval);
+  }
+
+  handleMobileMatchMedia = (event) => {
+    if (event.matches) {
+      this.setState({touchControlsVisible: true});
+    }
+    else {
+      this.setState({sidebarOpen: true});
+    }
+  }
+
+  handleSidebarMatchMedia = (event) => {
+    this.setState({
+      sidebarOpen: !event.matches,
+      sidebarToggleEnabled: event.matches
+    });
+  }
+
+  handleTouchControlsToggle = (event) => {
+    this.setState({touchControlsVisible: event.target.checked});
   }
 
   connectToWallet = async () => {
@@ -73,7 +106,6 @@ class RupertApp extends React.Component {
   }
 
   checkForCorrectNetwork = async () => {
-    // console.log("CHECKING FOR CORRECT NETWORK");
     try {
       const chainID = await this.web3.eth.getChainId();
       if (chainID !== this.chainID) {
@@ -98,13 +130,9 @@ class RupertApp extends React.Component {
         if (!connected) {
           return;
         } 
-        // console.log("EXECUTING METAMASK INTERVAL FUNCTIONS");
         const accounts = await this.web3.eth.getAccounts();
         if (accounts[0] !== this.state.userAccount) {
           this.setState({userAccount: accounts[0]}, () => {
-            // if (!this.state.walletConnected) {
-            //   this.setState({walletConnected: true});
-            // }
           });
         }
         await this.updateTokenBalance();
@@ -119,7 +147,6 @@ class RupertApp extends React.Component {
         console.error(error);
       }
     }, 1000);
-    // this.setState({walletConnected: true});
   }
 
   updateTokenBalance = async () => {
@@ -128,9 +155,6 @@ class RupertApp extends React.Component {
       if (tokenBalance !== this.state.tokenBalance) {
         this.setState({tokenBalance});
       }
-      // if (!this.state.walletConnected) {
-      //   this.setState({walletConnected: true});
-      // }
     }
     catch (error) {
       console.error(error);
@@ -140,6 +164,7 @@ class RupertApp extends React.Component {
   updateCosts = async () => {
     try {
       const ownedPurchasables = await this.dappContract.methods.getOwnedPurchasables(this.state.userAccount).call();
+      const touchControlsEnabled = ownedPurchasables.length > 0;
       const costs = {};
       
       for (const key in this.state.costs) {
@@ -147,7 +172,7 @@ class RupertApp extends React.Component {
         const purchasable = await this.dappContract.methods.purchasables(key).call();
         costs[key] = isOwned ? "OWNED" : purchasable.tokenCost;
       }
-      this.setState({costs});
+      this.setState({costs, touchControlsEnabled});
     }
     catch (error) {
       console.error(error);
@@ -167,16 +192,6 @@ class RupertApp extends React.Component {
     }
   }
   
-  // isApproved = async () => {
-  //   try {
-  //     const allowance = await tokenContract.methods.allowance(this.state.userAccount, dappContractAddress).call();
-  //     return parseInt(allowance) >= tokenApprovalThreshold;
-  //   } 
-  //   catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-  
   approveToken = async () => {
     try {
       await this.tokenContract.methods.approve(this.dappContractAddress, this.tokenApprovalAmount).send({from: this.state.userAccount});
@@ -189,7 +204,7 @@ class RupertApp extends React.Component {
   
   buyTokens = async () => {
     try {
-      await this.tokenContract.methods.buyTokens(10000).send({from: this.state.userAccount});
+      await this.tokenContract.methods.buyTokens(this.tokenPurchaseAmount).send({from: this.state.userAccount});
     }
     catch (error) {
       console.error(error);
@@ -199,10 +214,12 @@ class RupertApp extends React.Component {
   
   purchase = async (itemName, cost) => {
     try {
-      // const approved = await this.isApproved();
-      // if (!approved) {
-      if (!this.state.contractApproved) {
-        alert("Please click the \"APPROVE\" button before purchasing!");
+      if (!this.state.walletConnected) {
+        alert("Please click the \"Connect Wallet\" button to get started!");
+        return;
+      }
+      else if (!this.state.contractApproved) {
+        alert("Please click the \"Approve\" button before purchasing!");
         return;
       }
       else if(this.state.tokenBalance < cost) {
@@ -216,6 +233,14 @@ class RupertApp extends React.Component {
       console.error(error);
     }
   }
+
+  formatAccount = (accountAddress) => {
+    return `${accountAddress.slice(0,4)}...${accountAddress.slice(-4)}`;
+  }
+
+  purchasableOwned = (itemCost) => {
+    return itemCost === "OWNED";
+  }
   
   render() {
     return (
@@ -223,28 +248,31 @@ class RupertApp extends React.Component {
         <header className={styles.header}>
           <p>PenguinCoin Balance: {this.state.tokenBalance}</p>
           {this.state.walletConnected &&
-            <div id="buy" className={styles.contractInteraction}>
-              <p>"Buy" 10,000 PenguinCoins</p>
+            <div>
+              {this.state.sidebarToggleEnabled &&
+                <Hamburger
+                  menuOpen={this.state.sidebarOpen}
+                  setMenuOpen={(sidebarOpen) => this.setState({sidebarOpen})}
+                />
+              }
               <Button 
                 glow={this.state.tokenBalance < this.tokenApprovalThreshold}
                 onClick={this.buyTokens}
               >
-                BUY
+                "Buy" {this.tokenPurchaseAmount} Coins
               </Button>
             </div>
           }
-          <p>
-            {this.state.walletConnected ? `Account: ${this.state.userAccount}`
-                                        : <Button glow={true} onClick={this.connectToWallet}>CONNECT WALLET</Button>}
-          </p>
+          {this.state.walletConnected ? <p className={styles.account}>{`Account: ${this.formatAccount(this.state.userAccount)}`}</p>
+                                      : <Button glow={true} onClick={this.connectToWallet}>Connect Wallet</Button>}
         </header>
         <main className={styles.appMain}>
-          <Sidebar>
+          <Sidebar sidebarOpen={this.state.sidebarOpen}>
             <Purchasable
               label="Walk"
               item="walk" 
               cost={this.state.costs.walk}
-              keyBinding="A - D"
+              keyBinding="A - D - C"
               onClickUnowned={this.purchase}
               onClickOwned={() => {}}
             />
@@ -306,7 +334,7 @@ class RupertApp extends React.Component {
             />
           </Sidebar>
           <div className={styles.playArea}>
-            <div /*className="App-playArea-instructions"*/>
+            <div className={styles.instructions}>
               <h1 className={styles.title}>Hi, I'm Rupert!</h1>
               {!this.state.walletConnected &&
                 <h2 className={styles.subtitle}>Connect your Metamask wallet to get started.</h2>
@@ -314,14 +342,103 @@ class RupertApp extends React.Component {
               {this.state.walletConnected && !this.state.contractApproved &&
                 <div className={styles.contractInteraction}>
                   <h2 className={styles.subtitle}>Please approve PenguinCoin smart contract</h2>
-                  <Button onClick={this.approveToken}>APPROVE</Button>
+                  <div className={styles.approveButton}>
+                    <Button onClick={this.approveToken}>Approve</Button>
+                  </div>
                 </div>
               }
-              {this.state.contractApproved && <h2 className={styles.subtitle}>Spend your PenguinCoins to buy accessories and skills for me.</h2>}
+              {this.state.contractApproved &&
+                <h2 className={styles.subtitle}>
+                  Spend your PenguinCoins to buy accessories and skills for me.
+                </h2>
+              }
             </div>
-            <Penguin ref={this.penguin} costs={this.state.costs} accessories={this.state.accessories}/>
-            <p>Penguin character design by FreeCodeCamp.com</p>
-            <p>Accessories and animation by Nightlight Software</p>
+            <Penguin ref={this.penguin} costs={this.state.costs}/>
+            {this.state.touchControlsEnabled &&
+              <div className={styles.controlsArea}>
+                {this.state.touchControlsVisible &&
+                  <div className={styles.touchControls}>
+                    <div className={styles.controlsGroup}>
+                      {this.purchasableOwned(this.state.costs.walk) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("A")}>
+                          <FontAwesomeIcon icon={faArrowLeft} />
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.walk) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("D")}>
+                          <FontAwesomeIcon icon={faArrowRight} />
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.walk) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("C")}>
+                          <FontAwesomeIcon icon={faArrowRight} />
+                          {" "}
+                          <FontAwesomeIcon icon={faArrowLeft} />
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.jump) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("W")}>
+                          <FontAwesomeIcon icon={faArrowUp} />
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.spin) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("S")}>
+                          <FontAwesomeIcon icon={faSyncAlt} />
+                        </Button>
+                      }
+                    </div>
+                    <div className={styles.controlsGroupTextButtons}>
+                      {this.purchasableOwned(this.state.costs.wave) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("Q")}>
+                          Wave Left
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.wave) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("E")}>
+                          Wave Right
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.speak) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("F")}>
+                          Speak
+                        </Button>
+                      }
+                    </div>
+                    <div className={styles.controlsGroupTextButtons}>
+                      {this.purchasableOwned(this.state.costs.topHat) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("T")}>
+                          Top Hat
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.monocle) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("M")}>
+                          Monocle
+                        </Button>
+                      }
+                      {this.purchasableOwned(this.state.costs.lollipop) &&
+                        <Button onClick={() => this.penguin.current.handleKeyPress("L")}>
+                          Lollipop
+                        </Button>
+                      }
+                    </div>
+                  </div>
+                }
+                <label htmlFor="touch-controls-toggle" className={styles.toggleContainer}>
+                  <Toggle
+                    id="touch-controls-toggle"
+                    checked={this.state.touchControlsVisible}
+                    disabled={!this.state.touchControlsEnabled}
+                    onChange={this.handleTouchControlsToggle} />
+                  <span>Button Controls</span>
+                </label>
+              </div>
+            }
+            {!this.state.walletConnected &&
+              <div className={styles.infoArea}>
+                <p>Penguin character design by FreeCodeCamp.com</p>
+                <p>Accessories and animation by Nightlight Software</p>
+              </div>
+            }
           </div>
         </main>
       </div>
